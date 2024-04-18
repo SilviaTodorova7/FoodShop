@@ -34,9 +34,9 @@ namespace FoodShop.Data.Models
         public ProductType ProductType { get; set; } = null!;
 
         [ForeignKey(nameof(TradeMark))]
-        public int TradeMarkId { get; set; }
+        public int? TradeMarkId { get; set; }
 
-        public TradeMark TradeMark { get; set; } = null!;
+        public TradeMark? TradeMark { get; set; }
 
         [Required]
         [MaxLength(PictureUrlMaxLength)]

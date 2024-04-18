@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FoodShop.Data
 {
@@ -29,31 +30,37 @@ namespace FoodShop.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
             builder.Entity<UserProduct>()
                    .HasKey(t => new { t.UserId, t.ProductId });
 
-            builder.Entity<Product>()
-                   .HasOne(p => p.TradeMark)
-                   .WithMany(t => t.Products)
-                   .HasForeignKey(p => p.TradeMarkId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            Assembly configAssembly = Assembly.GetAssembly(typeof(FoodShopDbContext)) ?? 
+                Assembly.GetExecutingAssembly();
 
-            builder.Entity<Product>()
-                   .HasOne(p => p.Category)
-                   .WithMany(c => c.Products)
-                   .HasForeignKey(p => p.CategoryId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            builder.ApplyConfigurationsFromAssembly(configAssembly);
 
-            builder.Entity<Product>()
-                   .HasOne(p => p.ProductType)
-                   .WithMany(t => t.Products)
-                   .HasForeignKey(p => p.ProductTypeId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(builder);
 
-            builder.Entity<Product>()
-                   .Property(p => p.Price)
-                   .HasPrecision(17, 2);                   
+            //builder.Entity<Product>()
+            //       .HasOne(p => p.TradeMark)
+            //       .WithMany(t => t.Products)
+            //       .HasForeignKey(p => p.TradeMarkId)
+            //       .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Product>()
+            //       .HasOne(p => p.Category)
+            //       .WithMany(c => c.Products)
+            //       .HasForeignKey(p => p.CategoryId)
+            //       .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Product>()
+            //       .HasOne(p => p.ProductType)
+            //       .WithMany(t => t.Products)
+            //       .HasForeignKey(p => p.ProductTypeId)
+            //       .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Product>()
+            //       .Property(p => p.Price)
+            //       .HasPrecision(17, 2);                   
         }
     }
 }
