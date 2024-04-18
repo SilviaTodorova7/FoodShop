@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodShop.Data.Models
 {
     public class UserProduct
     {
+        public UserProduct()
+        {
+            this.Date = DateTime.UtcNow.Date; 
+        }
+
         [ForeignKey(nameof(ApplicationUser))]
         public Guid UserId { get; set; }
 
@@ -20,5 +21,8 @@ namespace FoodShop.Data.Models
         public Product Product { get; set; } = null!;
 
         public int Count { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
     }
 }
