@@ -19,6 +19,7 @@
     <ProjectReference Include="..\FoodShop.Common\FoodShop.Common.csproj" />
     <ProjectReference Include="..\FoodShop.Data.Models\FoodShop.Data.Models.csproj" />
     <ProjectReference Include="..\FoodShop.Data\FoodShop.Data.csproj" />
+    <ProjectReference Include="..\FoodShop.Services\FoodShop.Services.csproj" />
     <ProjectReference Include="..\FoodShop.Web.ViewModels\FoodShop.Web.ViewModels.csproj" />
   </ItemGroup>
 

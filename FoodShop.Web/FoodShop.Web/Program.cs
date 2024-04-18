@@ -1,5 +1,7 @@
 using FoodShop.Data;
 using FoodShop.Data.Models;
+using FoodShop.Services;
+using FoodShop.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodShop.Web
@@ -32,6 +34,7 @@ namespace FoodShop.Web
             })
                 .AddEntityFrameworkStores<FoodShopDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
             WebApplication app = builder.Build();
 

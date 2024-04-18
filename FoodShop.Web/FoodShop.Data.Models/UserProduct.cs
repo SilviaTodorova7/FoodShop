@@ -7,7 +7,7 @@ namespace FoodShop.Data.Models
     {
         public UserProduct()
         {
-            this.Date = DateTime.UtcNow.Date; 
+
         }
 
         [ForeignKey(nameof(ApplicationUser))]

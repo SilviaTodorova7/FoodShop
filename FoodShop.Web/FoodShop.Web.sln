@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Web", "FoodShop.Web\FoodShop.Web.csproj", "{D70548D8-5509-4AB4-8E24-856FC8EFB4BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Web", "FoodShop.Web\FoodShop.Web.csproj", "{D70548D8-5509-4AB4-8E24-856FC8EFB4BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Common", "FoodShop.Common\FoodShop.Common.csproj", "{DAC20526-0048-4C40-83D0-382AC35B74BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Common", "FoodShop.Common\FoodShop.Common.csproj", "{DAC20526-0048-4C40-83D0-382AC35B74BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{B7126463-D7DA-4F0E-B175-EC83EE34E9AB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{26E1589A-A82E-44EB-8638-5C88D37BF80A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Data", "FoodShop.Data\FoodShop.Data.csproj", "{DFEA8C5A-D8D0-4945-9FE9-7EA7EE5BC2A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Data", "FoodShop.Data\FoodShop.Data.csproj", "{DFEA8C5A-D8D0-4945-9FE9-7EA7EE5BC2A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Data.Models", "FoodShop.Data.Models\FoodShop.Data.Models.csproj", "{7DC33945-8714-4954-9BFE-B95609597E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Data.Models", "FoodShop.Data.Models\FoodShop.Data.Models.csproj", "{7DC33945-8714-4954-9BFE-B95609597E4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Web.ViewModels", "FoodShop.Web.ViewModels\FoodShop.Web.ViewModels.csproj", "{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Web.ViewModels", "FoodShop.Web.ViewModels\FoodShop.Web.ViewModels.csproj", "{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0F2F4F58-6853-475E-88D8-853B42FCCA30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Services", "FoodShop.Services\FoodShop.Services.csproj", "{9A6232DD-00F4-41D0-A0B3-BEC5350E710F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6232DD-00F4-41D0-A0B3-BEC5350E710F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6232DD-00F4-41D0-A0B3-BEC5350E710F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6232DD-00F4-41D0-A0B3-BEC5350E710F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6232DD-00F4-41D0-A0B3-BEC5350E710F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{DFEA8C5A-D8D0-4945-9FE9-7EA7EE5BC2A3} = {26E1589A-A82E-44EB-8638-5C88D37BF80A}
 		{7DC33945-8714-4954-9BFE-B95609597E4A} = {26E1589A-A82E-44EB-8638-5C88D37BF80A}
 		{93E56E5E-1A35-4E53-9F0D-1B9316B5BF4D} = {B7126463-D7DA-4F0E-B175-EC83EE34E9AB}
+		{9A6232DD-00F4-41D0-A0B3-BEC5350E710F} = {0F2F4F58-6853-475E-88D8-853B42FCCA30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39CEBE18-49EB-48B2-AC13-47629BD220B8}

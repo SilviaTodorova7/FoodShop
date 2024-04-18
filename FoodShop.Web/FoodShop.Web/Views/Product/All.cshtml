@@ -1,0 +1,57 @@
+﻿@using FoodShop.Web.ViewModels.Product
+
+@model ICollection<AllProductsViewModel>
+
+@{
+    ViewBag.Title = "All Products";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var e in Model)
+    {
+        <div class="card col-3 h-100" style="width: 20rem; ">
+            <img src="@e.PictureUrl" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="Product Image">
+            <div class="card-body" style="height: calc(100% - 150px); overflow: auto;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="title-wrapper" style="height: 6em; overflow: hidden;">
+                            <h4 class="card-title mt-1">@e.Name
+                                @if (!string.IsNullOrEmpty(e.TradeMark))
+                                {
+                                    <span> @e.TradeMark</span>
+                                }
+                                <div style="color:brown"> @e.ProductType</div>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0"><span class="fw-bold">Category: </span>@e.Category</p>
+                <p class="mb-0"><span class="fw-bold">Price: </span>@e.Price</p>
+            </div>
+            <div class="row gx-0">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div class="col-6 px-1">
+                        <a asp-controller="Product" asp-action="Buy" asp-route-id="@e.Id" class="btn btn-warning btn-sm mb-2 w-100 fw-bold rounded btn-dark-text">Buy Product</a>
+                    </div>
+                    <div class="col-6 px-1">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@e.Id" class="btn btn-warning btn-sm mb-2 w-100 fw-bold rounded btn-dark-text">Details</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-12 px-1">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@e.Id" class="btn btn-warning btn-sm mb-2 w-100 fw-bold rounded btn-dark-text">Details</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" /> 
+}

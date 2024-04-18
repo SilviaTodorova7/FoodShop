@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FoodShop.Common\FoodShop.Common.csproj" />
+    <ProjectReference Include="..\FoodShop.Data.Models\FoodShop.Data.Models.csproj" />
+    <ProjectReference Include="..\FoodShop.Data\FoodShop.Data.csproj" />
+    <ProjectReference Include="..\FoodShop.Web.ViewModels\FoodShop.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

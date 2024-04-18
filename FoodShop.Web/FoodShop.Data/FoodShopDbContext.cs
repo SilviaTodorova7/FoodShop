@@ -32,35 +32,17 @@ namespace FoodShop.Data
         {
             builder.Entity<UserProduct>()
                    .HasKey(t => new { t.UserId, t.ProductId });
+            builder.Entity<UserProduct>()
+                   .Property(up => up.Date)
+                   .HasDefaultValue(DateTime.UtcNow.Date);
+
 
             Assembly configAssembly = Assembly.GetAssembly(typeof(FoodShopDbContext)) ?? 
                 Assembly.GetExecutingAssembly();
 
             builder.ApplyConfigurationsFromAssembly(configAssembly);
 
-            base.OnModelCreating(builder);
-
-            //builder.Entity<Product>()
-            //       .HasOne(p => p.TradeMark)
-            //       .WithMany(t => t.Products)
-            //       .HasForeignKey(p => p.TradeMarkId)
-            //       .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Product>()
-            //       .HasOne(p => p.Category)
-            //       .WithMany(c => c.Products)
-            //       .HasForeignKey(p => p.CategoryId)
-            //       .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Product>()
-            //       .HasOne(p => p.ProductType)
-            //       .WithMany(t => t.Products)
-            //       .HasForeignKey(p => p.ProductTypeId)
-            //       .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Product>()
-            //       .Property(p => p.Price)
-            //       .HasPrecision(17, 2);                   
+            base.OnModelCreating(builder);  
         }
     }
 }
