@@ -1,0 +1,27 @@
+﻿@model ICollection<CategoryViewModel>
+
+@{
+    ViewBag.Title = "All Categories";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="row-cols-2" style="display: flex; justify-content: center">
+    <div class="card mb-6">
+        <div class="card-body">
+            @foreach (var e in Model)
+            {
+                <h2 class="card-title text-center">@e.Name</h2>
+                <a asp-controller="Category" asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
+                <a asp-controller="Category" asp-action="Delete" asp-route-id="@e.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
+                <p></p>
+                <p></p>
+            }
+        </div>
+        <a asp-controller="Product" asp-action="All" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Back to All Products</a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

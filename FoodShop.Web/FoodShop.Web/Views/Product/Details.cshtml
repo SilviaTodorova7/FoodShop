@@ -1,6 +1,4 @@
-﻿@* @using FoodShop.Web.ViewModels.Product *@
-
-@model ProductDetailsViewModel
+﻿@model ProductDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -9,7 +7,7 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-<div class="row-cols-2">
+<div class="row-cols-2" style="display: flex; justify-content: center">
     <div class="card mb-6">
         <img src="@Model.PictureUrl" class="card-img-top img-fluid" style="max-height: 600px; object-fit: contain;" alt="Product Image">
         <div class="card-body">
