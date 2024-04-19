@@ -1,4 +1,5 @@
 ﻿using FoodShop.Data;
+using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,51 @@ namespace FoodShop.Services
                 PictureUrl = p.PictureUrl,
             })
                 .ToArrayAsync();
+
+            return model;
+        }
+
+        public async Task<ProductDetailsViewModel> GetProductDetailsAsync(int id)
+        {
+            Product product = await this.dbContext
+                .Products
+                .Include(p => p.Category)
+                .Include(p => p.TradeMark)
+                .Include(p => p.ProductType)
+                .FirstAsync(p => p.Id == id);
+
+            ICollection<CommentViewModel> comments = await this.dbContext
+                .Comments
+                .Where(c => c.ProductId == id)
+                .Select(c => new CommentViewModel()
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Content = c.Content,
+                    User = c.User.UserName,
+                })
+                .ToArrayAsync();
+
+            ProductDetailsViewModel model = new ProductDetailsViewModel()
+            {
+                Id = id,
+                Name = product.Name,
+                Description = product.Description,
+                Category = product.Category.Name,
+                ProductType = product.ProductType.Name,
+                Price = product.Price.ToString(),
+                PictureUrl = product.PictureUrl,
+            };
+            
+            if (comments != null)
+            {
+                model.Comments = comments;
+            }
+
+            if (model.TradeMark != null)
+            {
+                model.TradeMark = product.TradeMark!.ToString();
+            }
 
             return model;
         }

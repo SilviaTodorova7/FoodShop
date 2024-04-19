@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodShop.Common\FoodShop.Common.csproj" />
     <ProjectReference Include="..\FoodShop.Data.Models\FoodShop.Data.Models.csproj" />
   </ItemGroup>
 

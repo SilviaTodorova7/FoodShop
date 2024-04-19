@@ -5,5 +5,7 @@ namespace FoodShop.Services.Interfaces
     public interface IProductService
     {
         Task<ICollection<AllProductsViewModel>> GetAllProductsAsync();
+
+        Task<ProductDetailsViewModel> GetProductDetailsAsync(int id);
     }
 }

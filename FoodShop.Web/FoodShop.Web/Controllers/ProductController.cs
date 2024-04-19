@@ -1,4 +1,5 @@
 ﻿using FoodShop.Services.Interfaces;
+using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodShop.Web.Controllers
@@ -10,9 +11,19 @@ namespace FoodShop.Web.Controllers
         {
             this.productService = productService;
         }
+
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             var model = await this.productService.GetAllProductsAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            ProductDetailsViewModel model = await this.productService.GetProductDetailsAsync(id);
 
             return View(model);
         }
