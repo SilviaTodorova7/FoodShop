@@ -1,8 +1,4 @@
-﻿using FoodShop.Data.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace FoodShop.Web.ViewModels.Product
+﻿namespace FoodShop.Web.ViewModels.Comment
 {
     public class CommentViewModel
     {

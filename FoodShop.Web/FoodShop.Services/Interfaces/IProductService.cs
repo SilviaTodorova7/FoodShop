@@ -7,5 +7,7 @@ namespace FoodShop.Services.Interfaces
         Task<ICollection<AllProductsViewModel>> GetAllProductsAsync();
 
         Task<ProductDetailsViewModel> GetProductDetailsAsync(int id);
+
+        Task<AddOrEditProductViewModel> GetProductForAddOrEditAsync(int id);
     }
 }

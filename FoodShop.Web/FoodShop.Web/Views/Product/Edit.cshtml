@@ -1,0 +1,68 @@
+﻿@model AddOrEditProductViewModel
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Edit" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name" class="form-label-add-edit">Product Name</label>
+                <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.PictureUrl" class="form-label-add-edit">PictureURL</label>
+                <input asp-for="@Model.PictureUrl" class="form-control" aria-required="true" placeholder="Enter picture URL" />
+                <span asp-validation-for="@Model.PictureUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Description" class="form-label-add-edit">Description</label>
+                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Price" class="form-label-add-edit">Price</label>
+                <input asp-for="@Model.Price" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ProductTypeId" class="form-label-add-edit">Select Product Type</label>
+                <select asp-for="@Model.ProductTypeId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.ProductTypes, "Id", "Name"))">
+                    <option value="">Select Product Type...</option>
+                </select>
+                <span asp-validation-for="@Model.ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.CategoryId" class="form-label-add-edit">Select Category</label>
+                <select asp-for="@Model.CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <option value="">Select Category...</option>
+                </select>
+                <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+            </div>
+            @if (Model.TradeMarks != null)
+            {
+                <div class="mb-3">
+                    <label asp-for="@Model.TradeMarkId" class="form-label-add-edit">Select Trademark</label>
+                    <select asp-for="@Model.TradeMarkId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.TradeMarks, "Id", "Name"))">
+                        <option value="">Select Trademark...</option>
+                    </select>
+                    <span asp-validation-for="@Model.TradeMarkId" class="text-danger"></span>
+                </div>
+            }
+            <div class="mb-3">
+                <input class="btn btn-warning btn-dark-text mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Confirm" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

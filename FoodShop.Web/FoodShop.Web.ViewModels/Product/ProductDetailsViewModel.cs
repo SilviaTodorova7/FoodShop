@@ -1,4 +1,5 @@
 ﻿using FoodShop.Data.Models;
+using FoodShop.Web.ViewModels.Comment;
 
 namespace FoodShop.Web.ViewModels.Product
 {

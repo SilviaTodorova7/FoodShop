@@ -35,6 +35,9 @@ namespace FoodShop.Web
                 .AddEntityFrameworkStores<FoodShopDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ITradeMarkService, TradeMarkService>();
 
             WebApplication app = builder.Build();
 
