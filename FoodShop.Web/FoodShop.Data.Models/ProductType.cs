@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FoodShop.Common.EntityValidationConstants.Type;
+using static FoodShop.Common.EntityValidationConstants.ProductType;
 
 namespace FoodShop.Data.Models
 {

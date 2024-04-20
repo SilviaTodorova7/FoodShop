@@ -14,6 +14,8 @@ namespace FoodShop.Web.Controllers
         {
             this.categoryService = categoryService;
         }
+
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             ICollection<CategoryViewModel> allCategories =

@@ -35,7 +35,7 @@
             public const int QuantityMaxValue = 1000;
         }
 
-        public static class Type
+        public static class ProductType
         {
             public const int NameMinLength = 2;
             public const int NameMaxLength = 100;
