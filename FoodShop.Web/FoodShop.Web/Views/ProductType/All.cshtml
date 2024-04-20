@@ -1,7 +1,7 @@
-﻿@model ICollection<CategoryViewModel>
+﻿@model ICollection<ProductTypeViewModel>
 
 @{
-    ViewBag.Title = "All Categories";
+    ViewBag.Title = "All Product Types";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -18,7 +18,7 @@
                 <p></p>
             }
         </div>
-        <a asp-controller="Category" asp-action="Add" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Category</a>
+        <a asp-controller="ProductType" asp-action="Add" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Product Type</a>
     </div>
 </div>
 

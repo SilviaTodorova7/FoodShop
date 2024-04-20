@@ -1,4 +1,5 @@
 ﻿using FoodShop.Data;
+using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,27 @@ namespace FoodShop.Services
         {
             this.dbContext = dbContext;
         }
+
+        public async Task AddCategoryAsync(AddOrEditCategoryViewModel model)
+        {
+            Category category = new Category()
+            {
+                Name = model.Name,
+            };
+
+            await dbContext.Categories.AddAsync(category);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditCategoryAsync(int id, AddOrEditCategoryViewModel model)
+        {
+            Category category = await this.dbContext.Categories
+                .FirstAsync(c => c.Id == id);
+
+            category.Name = model.Name;
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<ICollection<CategoryViewModel>> GetAllCategoriesAsync()
         {
             ICollection<CategoryViewModel> categories = await this.dbContext
@@ -24,6 +46,19 @@ namespace FoodShop.Services
                 .ToArrayAsync();
 
             return categories;
+        }
+
+        public async Task<AddOrEditCategoryViewModel> GetCategoryForEditAsync(int id)
+        {
+            Category category = await this.dbContext.Categories
+                .FirstAsync(c => c.Id == id);
+
+            AddOrEditCategoryViewModel viewModel = new AddOrEditCategoryViewModel()
+            {
+                Name = category.Name,
+            };
+
+            return viewModel;
         }
     }
 }

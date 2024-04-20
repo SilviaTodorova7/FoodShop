@@ -1,7 +1,7 @@
-﻿@model ICollection<CategoryViewModel>
+﻿@model ICollection<TradeMarkViewModel>
 
 @{
-    ViewBag.Title = "All Categories";
+    ViewBag.Title = "All Trademarks";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -18,10 +18,11 @@
                 <p></p>
             }
         </div>
-        <a asp-controller="Category" asp-action="Add" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Category</a>
+        <a asp-controller="TradeMark" asp-action="Add" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Trademark</a>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+

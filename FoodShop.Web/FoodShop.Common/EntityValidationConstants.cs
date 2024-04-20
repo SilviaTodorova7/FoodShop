@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace FoodShop.Common
+﻿namespace FoodShop.Common
 {
     public static class EntityValidationConstants
     {
