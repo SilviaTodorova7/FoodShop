@@ -38,6 +38,7 @@ namespace FoodShop.Web
             builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ITradeMarkService, TradeMarkService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
 
             WebApplication app = builder.Build();
 

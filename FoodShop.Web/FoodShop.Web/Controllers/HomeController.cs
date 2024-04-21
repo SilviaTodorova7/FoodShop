@@ -12,7 +12,7 @@ namespace FoodShop.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("All", "Product");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

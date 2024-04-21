@@ -2,6 +2,7 @@
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
 {
@@ -39,12 +40,11 @@ namespace FoodShop.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add(int id)
+        public async Task<IActionResult> Add()
         {
             try
             {
-                AddOrEditProductViewModel model = await this.productService
-                    .GetProductForAddOrEditAsync(id);
+                AddOrEditProductViewModel model = new AddOrEditProductViewModel();
                 model.Categories = await this.categoryService.GetAllCategoriesAsync();
                 model.ProductTypes = await this.productTypeService.GetAllProductTypesAsync();
                 model.TradeMarks = await this.tradeMarkService.GetAllTradeMarksAsync();
@@ -77,5 +77,6 @@ namespace FoodShop.Web.Controllers
             }
             
         }
+
     }
 }
