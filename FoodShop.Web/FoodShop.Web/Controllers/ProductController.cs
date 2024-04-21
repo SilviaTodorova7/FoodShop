@@ -165,14 +165,6 @@ namespace FoodShop.Web.Controllers
                 }
             }
 
-            bool existByName = await this.productService.ProductExistByName(model.Name);
-            if (existByName)
-            {
-                this.TempData[ErrorMessage] = "Product with this name already exist.";
-                ModelState.AddModelError(string.Empty, "Product with this name already exist.");
-                return View(model);
-            }
-
             if (!ModelState.IsValid)
             {
                 model.Categories = await this.categoryService.GetAllCategoriesAsync();

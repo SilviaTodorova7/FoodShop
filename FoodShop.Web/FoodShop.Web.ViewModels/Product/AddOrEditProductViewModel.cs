@@ -42,7 +42,7 @@ namespace FoodShop.Web.ViewModels.Product
         public string PictureUrl { get; set; } = null!;
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
-        public string Price { get; set; } = null!;
+        public decimal Price { get; set; }
 
         [Required]
         [Range (QuantityMinValue, QuantityMaxValue)]

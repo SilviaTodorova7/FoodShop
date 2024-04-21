@@ -2,6 +2,7 @@ using FoodShop.Data;
 using FoodShop.Data.Models;
 using FoodShop.Services;
 using FoodShop.Services.Interfaces;
+using FoodShop.Web.Infrastructure.ModelBinders;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodShop.Web
@@ -33,7 +34,13 @@ namespace FoodShop.Web
                 .GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddEntityFrameworkStores<FoodShopDbContext>();
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
+
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();

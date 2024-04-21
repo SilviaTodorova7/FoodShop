@@ -26,7 +26,7 @@ namespace FoodShop.Services
                 ProductTypeId = model.ProductTypeId,
                 TradeMarkId = model.TradeMarkId,
                 Quantity = model.Quantity,
-                Price = Decimal.Parse(model.Price),
+                Price = model.Price,
             };
 
             await dbContext.Products.AddAsync(product);
@@ -49,6 +49,7 @@ namespace FoodShop.Services
             product.ProductTypeId = model.ProductTypeId;
             product.TradeMarkId = model.TradeMarkId;
             product.Quantity = model.Quantity;
+            product.Price = model.Price;
 
             await this.dbContext.SaveChangesAsync();
         }
@@ -129,7 +130,7 @@ namespace FoodShop.Services
                 Id = id,
                 Name = product.Name,
                 Description = product.Description,
-                Price = product.Price.ToString(),
+                Price = product.Price,
                 PictureUrl = product.PictureUrl,
                 Quantity = product.Quantity,
                 CategoryId = product.CategoryId,
