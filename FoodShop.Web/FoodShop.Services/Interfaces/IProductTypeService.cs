@@ -11,5 +11,7 @@ namespace FoodShop.Services.Interfaces
         Task<AddOrEditProductTypeViewModel> GetProductTypeForEditAsync(int id);
 
         Task EditProductTypeAsync(int id, AddOrEditProductTypeViewModel model);
+
+        Task<bool> ProductTypeExistsByIdAsync(int id);
     }
 }

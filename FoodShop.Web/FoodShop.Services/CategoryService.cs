@@ -25,6 +25,14 @@ namespace FoodShop.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> CategoryExistsByIdAsync(int id)
+        {
+            bool existsById = await this.dbContext.Categories
+                .AnyAsync(c => c.Id == id);
+
+            return existsById;
+        }
+
         public async Task EditCategoryAsync(int id, AddOrEditCategoryViewModel model)
         {
             Category category = await this.dbContext.Categories

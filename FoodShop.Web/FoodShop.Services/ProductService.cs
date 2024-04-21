@@ -14,6 +14,45 @@ namespace FoodShop.Services
         {
             this.dbContext = dbContext;
         }
+
+        public async Task AddProductAsync(AddOrEditProductViewModel model)
+        {
+            Product product = new Product()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                PictureUrl = model.PictureUrl,
+                CategoryId = model.CategoryId,
+                ProductTypeId = model.ProductTypeId,
+                TradeMarkId = model.TradeMarkId,
+                Quantity = model.Quantity,
+                Price = Decimal.Parse(model.Price),
+            };
+
+            await dbContext.Products.AddAsync(product);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditProductAsync(AddOrEditProductViewModel model, int id)
+        {
+            Product product = await this.dbContext
+                .Products
+                .Include(p => p.TradeMark)
+                .Include(p => p.ProductType)
+                .Include(p => p.Category)
+                .FirstAsync(p => p.Id == id);
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.PictureUrl = model.PictureUrl;
+            product.CategoryId = model.CategoryId;
+            product.ProductTypeId = model.ProductTypeId;
+            product.TradeMarkId = model.TradeMarkId;
+            product.Quantity = model.Quantity;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<ICollection<AllProductsViewModel>> GetAllProductsAsync()
         {
             AllProductsViewModel[] model = await this.dbContext.Products.Select(p => new AllProductsViewModel()
@@ -76,7 +115,7 @@ namespace FoodShop.Services
             return model;
         }
 
-        public async Task<AddOrEditProductViewModel> GetProductForAddOrEditAsync(int id)
+        public async Task<AddOrEditProductViewModel> GetProductForEditAsync(int id)
         {
             Product product = await this.dbContext
                 .Products
@@ -103,6 +142,14 @@ namespace FoodShop.Services
             }
 
             return model;
+        }
+
+        public async Task<bool> ProductExistByName(string name)
+        {
+            bool existByName = await this.dbContext.Products
+                .AnyAsync(p => p.Name == name);
+
+            return existByName;
         }
     }
 }

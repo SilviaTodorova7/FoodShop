@@ -11,5 +11,7 @@ namespace FoodShop.Services.Interfaces
         Task<AddOrEditCategoryViewModel> GetCategoryForEditAsync(int id);
 
         Task EditCategoryAsync(int id, AddOrEditCategoryViewModel model);
+
+        Task<bool> CategoryExistsByIdAsync(int id);
     }
 }

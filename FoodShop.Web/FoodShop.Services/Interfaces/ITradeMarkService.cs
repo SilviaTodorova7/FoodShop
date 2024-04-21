@@ -11,5 +11,7 @@ namespace FoodShop.Services.Interfaces
         Task<AddOrEditTradeMarkViewModel> GetForEditTradeMarkAsync(int id);
 
         Task EditTradeMarkAsync(int id, AddOrEditTradeMarkViewModel model);
+
+        Task<bool> TradeMarkExistsByIdAsync(int? id);
     }
 }

@@ -8,6 +8,12 @@ namespace FoodShop.Services.Interfaces
 
         Task<ProductDetailsViewModel> GetProductDetailsAsync(int id);
 
-        Task<AddOrEditProductViewModel> GetProductForAddOrEditAsync(int id);
+        Task<AddOrEditProductViewModel> GetProductForEditAsync(int id);
+
+        Task AddProductAsync(AddOrEditProductViewModel model);
+
+        Task<bool> ProductExistByName(string name);
+
+        Task EditProductAsync(AddOrEditProductViewModel model, int id);
     }
 }

@@ -62,5 +62,13 @@ namespace FoodShop.Services
 
             return model;
         }
+
+        public async Task<bool> TradeMarkExistsByIdAsync(int? id)
+        {
+            bool existsById = await this.dbContext.TradeMarks
+                .AnyAsync (t => t.Id == id);
+
+            return existsById;
+        }
     }
 }

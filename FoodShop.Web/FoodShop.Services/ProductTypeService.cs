@@ -60,5 +60,13 @@ namespace FoodShop.Services
 
             return viewModel;
         }
+
+        public async Task<bool> ProductTypeExistsByIdAsync(int id)
+        {
+            bool existsById = await this.dbContext.ProductTypes
+                .AnyAsync(pt => pt.Id == id);
+
+            return existsById;
+        }
     }
 }

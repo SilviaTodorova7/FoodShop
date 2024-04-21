@@ -16,6 +16,7 @@ namespace FoodShop.Web.ViewModels.Comment
         [StringLength(ContentMaxLength, MinimumLength = ContentMinLength, ErrorMessage = "Comment must be between {2} and {1} characters long.")]
         public string Content { get; set; } = null!;
 
+        [Display(Name = "Username")]
         public string UserName { get; set; } = null!;
 
         [Range(0, int.MaxValue)]
