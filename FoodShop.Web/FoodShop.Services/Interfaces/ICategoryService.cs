@@ -6,6 +6,8 @@ namespace FoodShop.Services.Interfaces
     {
         Task<ICollection<CategoryViewModel>> GetAllCategoriesAsync();
 
+        Task<ICollection<string>> GetAllCategoriesNamesAsync();
+
         Task AddCategoryAsync(AddOrEditCategoryViewModel model);
 
         Task<AddOrEditCategoryViewModel> GetCategoryForEditAsync(int id);

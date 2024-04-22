@@ -6,6 +6,8 @@ namespace FoodShop.Services.Interfaces
     {
         Task<ICollection<TradeMarkViewModel>> GetAllTradeMarksAsync();
 
+        Task<ICollection<string>> GetAllTradeMarksNamesAsync();
+
         Task AddTradeMarkAsync(AddOrEditTradeMarkViewModel model);
 
         Task<AddOrEditTradeMarkViewModel> GetForEditTradeMarkAsync(int id);

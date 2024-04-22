@@ -6,6 +6,8 @@ namespace FoodShop.Services.Interfaces
     {
         Task<ICollection<ProductTypeViewModel>> GetAllProductTypesAsync();
 
+        Task<ICollection<string>> GetAllProductTypesNamesAsync();
+
         Task AddProductTypeAsync(AddOrEditProductTypeViewModel model);
 
         Task<AddOrEditProductTypeViewModel> GetProductTypeForEditAsync(int id);

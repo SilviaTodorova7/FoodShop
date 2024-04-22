@@ -56,6 +56,11 @@ namespace FoodShop.Services
             return categories;
         }
 
+        public async Task<ICollection<string>> GetAllCategoriesNamesAsync()
+        {
+            return await this.dbContext.Categories.Select(c => c.Name).ToArrayAsync();
+        }
+
         public async Task<AddOrEditCategoryViewModel> GetCategoryForEditAsync(int id)
         {
             Category category = await this.dbContext.Categories

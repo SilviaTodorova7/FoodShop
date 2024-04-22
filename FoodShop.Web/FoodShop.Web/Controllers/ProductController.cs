@@ -1,4 +1,5 @@
 ﻿using FoodShop.Services.Interfaces;
+using FoodShop.Services.Models.Product;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,13 +22,29 @@ namespace FoodShop.Web.Controllers
             this.tradeMarkService = tradeMarkService;
         }
 
+        //[AllowAnonymous]
+        //[HttpGet]
+        //public async Task<IActionResult> All()
+        //{
+        //    var model = await this.productService.GetAllProductsAsync();
+
+        //    return View(model);
+        //}
+
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllProductQueryModel queryModel)
         {
-            var model = await this.productService.GetAllProductsAsync();
+            AllProductsFilteredAndPagedServiceModel serviceModel = await this.productService
+                .AllAsync(queryModel);
 
-            return View(model);
+            queryModel.Products = serviceModel.Products;
+            queryModel.TotalProducts = serviceModel.TotalProducts;
+            queryModel.Categories = await this.categoryService.GetAllCategoriesNamesAsync();
+            queryModel.TradeMarks = await this.tradeMarkService.GetAllTradeMarksNamesAsync();
+            queryModel.ProductTypes = await this.productTypeService.GetAllProductTypesNamesAsync();
+
+            return View(queryModel);
         }
 
         [AllowAnonymous]

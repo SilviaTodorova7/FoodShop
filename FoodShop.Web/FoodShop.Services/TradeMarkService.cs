@@ -49,6 +49,11 @@ namespace FoodShop.Services
             return tradeMarks;
         }
 
+        public async Task<ICollection<string>> GetAllTradeMarksNamesAsync()
+        {
+            return await this.dbContext.TradeMarks.Select (t => t.Name).ToArrayAsync ();
+        }
+
         public async Task<AddOrEditTradeMarkViewModel> GetForEditTradeMarkAsync(int id)
         {
             TradeMark tradeMark = await this.dbContext

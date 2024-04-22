@@ -48,6 +48,11 @@ namespace FoodShop.Services
             return productTypes;
         }
 
+        public async Task<ICollection<string>> GetAllProductTypesNamesAsync()
+        {
+            return await this.dbContext.ProductTypes.Select(pt => pt.Name).ToArrayAsync();
+        }
+
         public async Task<AddOrEditProductTypeViewModel> GetProductTypeForEditAsync(int id)
         {
            ProductType productType = await this.dbContext.ProductTypes

@@ -1,4 +1,5 @@
-﻿using FoodShop.Web.ViewModels.Product;
+﻿using FoodShop.Services.Models.Product;
+using FoodShop.Web.ViewModels.Product;
 
 namespace FoodShop.Services.Interfaces
 {
@@ -15,5 +16,7 @@ namespace FoodShop.Services.Interfaces
         Task<bool> ProductExistByName(string name);
 
         Task EditProductAsync(AddOrEditProductViewModel model, int id);
+
+        Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel model);
     }
 }
