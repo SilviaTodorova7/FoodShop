@@ -147,6 +147,7 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productService.AddProductAsync(model);
+                this.TempData[SuccessMessage] = "You have added product successfully!";
 
                 return RedirectToAction("All", "Product");
             }
@@ -235,13 +236,70 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productService.EditProductAsync(model, id);
-                
+                this.TempData[SuccessMessage] = "You have edited product successfully!";
+
                 return RedirectToAction("Details", "Product", new { id });
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Unexpected error occured while editing product. Please try again later or contact administrator!");
                 this.TempData[ErrorMessage] = "Unexpected error occured while editing product. Please try again later or contact administrator!";
+
+                return RedirectToAction("All", "Product");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool existById = await this.productService.ExistByIdAsync(id);
+
+            if (!existById)
+            {
+                this.TempData[ErrorMessage] = "Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Product");
+            }
+
+            try
+            {
+                DeleteProductViewModel model = await this.productService
+                    .GetProductViewDetailsToDeleteAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to delete product. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while trying to delete product. Please try again later or contact administrator!";
+
+                return RedirectToAction("All", "Product");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, DeleteProductViewModel model)
+        {
+            bool existById = await this.productService.ExistByIdAsync(id);
+
+            if (!existById)
+            {
+                this.TempData[ErrorMessage] = "Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Product");
+            }
+
+            try
+            {
+                await this.productService.DeleteProductByIdAsync(id, model);
+                this.TempData[WarningMessage] = "You have successfully deleted product!";
+
+                return RedirectToAction("All", "Product");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while deleting product. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while deleting product. Please try again later or contact administrator!";
 
                 return RedirectToAction("All", "Product");
             }

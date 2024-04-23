@@ -3,6 +3,7 @@ using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
 {
@@ -43,10 +44,13 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.categoryService.AddCategoryAsync(model);
+                this.TempData[SuccessMessage] = "You have added new Category successfully!";
+
                 return RedirectToAction("All", "Category");
             }
             catch (Exception)
             {
+                this.TempData[ErrorMessage] = "Something went wrong while adding category. Please try again later or contact administrator!";
                 ModelState.AddModelError(nameof(Category), "Something went wrong while adding category. Please try again later or contact administrator!");
                 return View(model);
             }
@@ -59,7 +63,7 @@ namespace FoodShop.Web.Controllers
             {
                 AddOrEditCategoryViewModel model = await this.categoryService
                     .GetCategoryForEditAsync(id);
-                return View(model);
+                return RedirectToAction("All", "Category");
             }
             catch (Exception)
             {
@@ -75,9 +79,19 @@ namespace FoodShop.Web.Controllers
                 return View(model);
             }
 
-            await this.categoryService.EditCategoryAsync(id, model);
+            try
+            {
+                await this.categoryService.EditCategoryAsync(id, model);
+                this.TempData[SuccessMessage] = "You have edited Category successfully!";
 
-            return RedirectToAction("All", "Category");
+                return RedirectToAction("All", "Category");
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Something went wrong while editing category. Please try again later or contact administrator!";
+                ModelState.AddModelError(nameof(Category), "Something went wrong while editing category. Please try again later or contact administrator!");
+                return View(model);
+            }
         }
     }
 }

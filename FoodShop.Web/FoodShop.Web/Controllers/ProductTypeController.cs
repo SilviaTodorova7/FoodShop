@@ -3,6 +3,7 @@ using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.ProductType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
 {
@@ -43,6 +44,8 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productTypeService.AddProductTypeAsync(model);
+                this.TempData[SuccessMessage] = "You have added Product Type successfully!";
+
                 return RedirectToAction("All", "ProductType");
             }
             catch (Exception)
@@ -72,6 +75,8 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productTypeService.EditProductTypeAsync(id, model);
+                this.TempData[SuccessMessage] = "You have edited Product Type successfully!";
+
                 return RedirectToAction("All", "ProductType");
             }
             catch (Exception)

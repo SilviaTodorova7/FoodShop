@@ -20,5 +20,9 @@ namespace FoodShop.Services.Interfaces
         Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel model);
 
         Task<bool> ExistByIdAsync(int id);
+
+        Task<DeleteProductViewModel> GetProductViewDetailsToDeleteAsync(int id);
+
+        Task DeleteProductByIdAsync(int id, DeleteProductViewModel model);
     }
 }

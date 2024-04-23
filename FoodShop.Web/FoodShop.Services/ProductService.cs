@@ -101,6 +101,17 @@ namespace FoodShop.Services
             
         }
 
+        public async Task DeleteProductByIdAsync(int id, DeleteProductViewModel model)
+        {
+            Product product = await this.dbContext
+                .Products
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id == id);
+
+            product.IsActive = false;
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task EditProductAsync(AddOrEditProductViewModel model, int id)
         {
             Product product = await this.dbContext
@@ -224,6 +235,28 @@ namespace FoodShop.Services
             {
                 model.TradeMarkId = product.TradeMarkId;
             }
+
+            return model;
+        }
+
+        public async Task<DeleteProductViewModel> GetProductViewDetailsToDeleteAsync(int id)
+        {
+            Product product = await this.dbContext
+                .Products
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id == id);
+
+            DeleteProductViewModel model = new DeleteProductViewModel()
+            {
+                Name = product.Name,
+                PictureUrl = product.PictureUrl,
+                Price = product.Price,
+            };
+
+            if (product.TradeMark != null)
+            {
+                model.TradeMark = product.TradeMark.Name;
+            };
 
             return model;
         }

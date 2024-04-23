@@ -1,9 +1,9 @@
 ﻿using FoodShop.Data.Models;
-using FoodShop.Services;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.TradeMark;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
 {
@@ -44,6 +44,7 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.tradeMarkService.AddTradeMarkAsync(model);
+                this.TempData[SuccessMessage] = "You have added new Trademark successfully!";
                 return RedirectToAction("All", "TradeMark");
             }
             catch (Exception)
@@ -73,6 +74,7 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.tradeMarkService.EditTradeMarkAsync(id, model);
+                this.TempData[SuccessMessage] = "You have edited Trademark successfully!";
 
                 return RedirectToAction("All", "TradeMark");
             }

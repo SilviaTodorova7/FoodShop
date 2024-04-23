@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static FoodShop.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
 {
@@ -44,6 +45,8 @@ namespace FoodShop.Web.Controllers
                 model.UserName = User.Identity!.Name!;
                 string userId = User.GetUserId()!;
                 await this.commentService.AddNewCommentAsync(model, model.ProductId, userId);
+                this.TempData[SuccessMessage] = "You have successfully added new comment!";
+
                 return RedirectToAction("Details", "Product", new {id = model.ProductId});
             }
             catch (Exception)
