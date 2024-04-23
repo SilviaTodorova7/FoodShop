@@ -8,6 +8,9 @@ namespace FoodShop.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            builder.Property(p => p.IsActive)
+                .HasDefaultValue(true);
+
             builder.HasOne(p => p.TradeMark)
                    .WithMany(t => t.Products)
                    .HasForeignKey(p => p.TradeMarkId)

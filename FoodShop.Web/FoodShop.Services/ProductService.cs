@@ -74,6 +74,7 @@ namespace FoodShop.Services
             };
 
             IEnumerable<AllProductsViewModel> allProducts = await productsQuery
+                .Where(p => p.IsActive)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.ProductsPerPage)
                 .Take(queryModel.ProductsPerPage)
                 .Select(p => new AllProductsViewModel()

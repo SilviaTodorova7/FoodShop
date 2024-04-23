@@ -46,6 +46,8 @@ namespace FoodShop.Data.Models
 
         public int Quantity { get; set; }
 
+        public bool IsActive { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<UserProduct> UserProducts { get; set; }

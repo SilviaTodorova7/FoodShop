@@ -37,12 +37,14 @@ namespace FoodShop.Data
                    .HasDefaultValue(DateTime.UtcNow.Date);
 
 
+
+
             Assembly configAssembly = Assembly.GetAssembly(typeof(FoodShopDbContext)) ?? 
                 Assembly.GetExecutingAssembly();
 
             builder.ApplyConfigurationsFromAssembly(configAssembly);
 
-            base.OnModelCreating(builder);  
+            base.OnModelCreating(builder);
         }
     }
 }

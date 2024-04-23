@@ -22,15 +22,6 @@ namespace FoodShop.Web.Controllers
             this.tradeMarkService = tradeMarkService;
         }
 
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public async Task<IActionResult> All()
-        //{
-        //    var model = await this.productService.GetAllProductsAsync();
-
-        //    return View(model);
-        //}
-
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All([FromQuery]AllProductQueryModel queryModel)

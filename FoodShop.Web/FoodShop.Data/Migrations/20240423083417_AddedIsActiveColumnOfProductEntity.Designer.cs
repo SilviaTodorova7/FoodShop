@@ -4,6 +4,7 @@ using FoodShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodShop.Data.Migrations
 {
     [DbContext(typeof(FoodShopDbContext))]
-    partial class FoodShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423083417_AddedIsActiveColumnOfProductEntity")]
+    partial class AddedIsActiveColumnOfProductEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

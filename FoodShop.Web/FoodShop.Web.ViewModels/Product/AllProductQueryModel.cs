@@ -2,6 +2,7 @@
 using FoodShop.Web.ViewModels.Product.Enums;
 using FoodShop.Web.ViewModels.ProductType;
 using FoodShop.Web.ViewModels.TradeMark;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using static FoodShop.Common.GeneralApplicationConstants;
 
@@ -18,10 +19,13 @@ namespace FoodShop.Web.ViewModels.Product
             this.CurrentPage = DefaultCurrentPage;
             this.ProductsPerPage = DefaultProductsPerPage;
         }
+        
         public string? Category { get; set; }
-
+        
+        [Display(Name = "Product Type")]
         public string? ProductType { get; set; }
 
+        [Display(Name = "Trademark")]
         public string? TradeMark { get; set; }
 
         [Display(Name = "Search by word")]
@@ -32,6 +36,7 @@ namespace FoodShop.Web.ViewModels.Product
 
         public int CurrentPage { get; set; }
 
+        [Display(Name = "Show Products Per Page")]
         public int ProductsPerPage { get; set; }
 
         public int TotalProducts { get; set; }
