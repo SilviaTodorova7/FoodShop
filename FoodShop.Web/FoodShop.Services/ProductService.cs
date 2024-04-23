@@ -60,7 +60,10 @@ namespace FoodShop.Services
 
                 productsQuery = productsQuery
                     .Where(p => EF.Functions.Like(p.Name, wildCard) ||
-                        EF.Functions.Like(p.Description, wildCard));
+                        EF.Functions.Like(p.Description, wildCard) ||
+                        EF.Functions.Like(p.ProductType.Name, wildCard) ||
+                        EF.Functions.Like(p.TradeMark.Name, wildCard) ||
+                        EF.Functions.Like(p.Category.Name, wildCard));
             }
             productsQuery = queryModel.ProductSorting switch
             {
@@ -102,6 +105,7 @@ namespace FoodShop.Services
         {
             Product product = await this.dbContext
                 .Products
+                .Where(p => p.IsActive)
                 .Include(p => p.TradeMark)
                 .Include(p => p.ProductType)
                 .Include(p => p.Category)
@@ -119,27 +123,40 @@ namespace FoodShop.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<ICollection<AllProductsViewModel>> GetAllProductsAsync()
+        public async Task<bool> ExistByIdAsync(int id)
         {
-            AllProductsViewModel[] model = await this.dbContext.Products.Select(p => new AllProductsViewModel()
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Category = p.Category.Name,
-                TradeMark = p.TradeMark.Name,
-                ProductType = p.ProductType.Name,
-                Price = p.Price,
-                PictureUrl = p.PictureUrl,
-            })
-                .ToArrayAsync();
+            bool existById = await this.dbContext
+                .Products
+                .Where(p => p.IsActive)
+                .AnyAsync(p => p.Id == id);
 
-            return model;
+            return existById;
         }
+
+        //public async Task<ICollection<AllProductsViewModel>> GetAllProductsAsync()
+        //{
+        //    AllProductsViewModel[] model = await this.dbContext
+        //        .Products
+        //        .Select(p => new AllProductsViewModel()
+        //    {
+        //        Id = p.Id,
+        //        Name = p.Name,
+        //        Category = p.Category.Name,
+        //        TradeMark = p.TradeMark.Name,
+        //        ProductType = p.ProductType.Name,
+        //        Price = p.Price,
+        //        PictureUrl = p.PictureUrl,
+        //    })
+        //        .ToArrayAsync();
+
+        //    return model;
+        //}
 
         public async Task<ProductDetailsViewModel> GetProductDetailsAsync(int id)
         {
             Product product = await this.dbContext
                 .Products
+                .Where(p => p.IsActive)
                 .Include(p => p.Category)
                 .Include(p => p.TradeMark)
                 .Include(p => p.ProductType)
@@ -185,6 +202,7 @@ namespace FoodShop.Services
         {
             Product product = await this.dbContext
                 .Products
+                .Where(p => p.IsActive)
                 .Include(p => p.TradeMark)
                 .Include(p => p.ProductType)
                 .Include(p => p.Category)
@@ -212,7 +230,9 @@ namespace FoodShop.Services
 
         public async Task<bool> ProductExistByName(string name)
         {
-            bool existByName = await this.dbContext.Products
+            bool existByName = await this.dbContext
+                .Products
+                .Where(p => p.IsActive)
                 .AnyAsync(p => p.Name == name);
 
             return existByName;

@@ -26,25 +26,54 @@ namespace FoodShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> All([FromQuery]AllProductQueryModel queryModel)
         {
-            AllProductsFilteredAndPagedServiceModel serviceModel = await this.productService
+            try
+            {
+                AllProductsFilteredAndPagedServiceModel serviceModel = await this.productService
                 .AllAsync(queryModel);
 
-            queryModel.Products = serviceModel.Products;
-            queryModel.TotalProducts = serviceModel.TotalProducts;
-            queryModel.Categories = await this.categoryService.GetAllCategoriesNamesAsync();
-            queryModel.TradeMarks = await this.tradeMarkService.GetAllTradeMarksNamesAsync();
-            queryModel.ProductTypes = await this.productTypeService.GetAllProductTypesNamesAsync();
+                queryModel.Products = serviceModel.Products;
+                queryModel.TotalProducts = serviceModel.TotalProducts;
+                queryModel.Categories = await this.categoryService.GetAllCategoriesNamesAsync();
+                queryModel.TradeMarks = await this.tradeMarkService.GetAllTradeMarksNamesAsync();
+                queryModel.ProductTypes = await this.productTypeService.GetAllProductTypesNamesAsync();
 
-            return View(queryModel);
+                return View(queryModel);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured. Please try again later or contact administrator!";
+
+                return BadRequest();
+            }
         }
 
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            ProductDetailsViewModel model = await this.productService.GetProductDetailsAsync(id);
+            bool existById = await this.productService.ExistByIdAsync(id);
 
-            return View(model);
+            if (!existById)
+                {
+                    this.TempData[ErrorMessage] = "Product with the provided id does not exist!";
+                    
+                return RedirectToAction("All", "Product");
+                }
+
+            try
+            {
+                ProductDetailsViewModel model = await this.productService.GetProductDetailsAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to view product details. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while trying to view product details. Please try again later or contact administrator!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpGet]
@@ -63,9 +92,11 @@ namespace FoodShop.Web.Controllers
             }
             catch (Exception)
             {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to add product. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while trying to add product. Please try again later or contact administrator!";
+
                 return RedirectToAction("All", "Product");
             }
-
         }
 
         [HttpPost]
@@ -97,6 +128,10 @@ namespace FoodShop.Web.Controllers
             {
                 this.TempData[ErrorMessage] = "Product with this name already exist.";
                 ModelState.AddModelError(string.Empty, "Product with this name already exist.");
+                model.Categories = await this.categoryService.GetAllCategoriesAsync();
+                model.ProductTypes = await this.productTypeService.GetAllProductTypesAsync();
+                model.TradeMarks = await this.tradeMarkService.GetAllTradeMarksAsync();
+
                 return View(model);
             }
 
@@ -112,25 +147,30 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productService.AddProductAsync(model);
+
+                return RedirectToAction("All", "Product");
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Unexpected error occured while adding product. Please try again later or contact administrator!");
-                model.Categories = await this.categoryService.GetAllCategoriesAsync();
-                model.TradeMarks = await this.tradeMarkService.GetAllTradeMarksAsync();
-                model.ProductTypes = await this.productTypeService.GetAllProductTypesAsync();
+                this.TempData[ErrorMessage] = "Unexpected error occured while adding product. Please try again later or contact administrator!";
 
-                return View(model);
-
+                return RedirectToAction("Äll", "Product");
             }
-
-            return RedirectToAction("All", "Product");
-
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            bool existById = await this.productService.ExistByIdAsync(id);
+
+            if (!existById)
+            {
+                this.TempData[ErrorMessage] = "Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Product");
+            }
+
             try
             {
                 AddOrEditProductViewModel model = await this.productService
@@ -143,14 +183,24 @@ namespace FoodShop.Web.Controllers
             }
             catch (Exception)
             {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to edit product. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while trying to edit product. Please try again later or contact administrator!";
+                
                 return RedirectToAction("All", "Product");
             }
-            
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(AddOrEditProductViewModel model, int id)
         {
+            bool existById = await this.productService.ExistByIdAsync(id);
+
+            if (!existById)
+            {
+                this.TempData[ErrorMessage] = "Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Product");
+            }
 
             bool categoryExist = await this.categoryService.CategoryExistsByIdAsync(model.CategoryId);
             if (!categoryExist)
@@ -185,21 +235,16 @@ namespace FoodShop.Web.Controllers
             try
             {
                 await this.productService.EditProductAsync(model, id);
+                
+                return RedirectToAction("Details", "Product", new { id });
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Unexpected error occured while editing product. Please try again later or contact administrator!");
-                model.Categories = await this.categoryService.GetAllCategoriesAsync();
-                model.TradeMarks = await this.tradeMarkService.GetAllTradeMarksAsync();
-                model.ProductTypes = await this.productTypeService.GetAllProductTypesAsync();
+                this.TempData[ErrorMessage] = "Unexpected error occured while editing product. Please try again later or contact administrator!";
 
-                return View(model);
-
+                return RedirectToAction("All", "Product");
             }
-
-            return RedirectToAction("All", "Product");
-
         }
-
     }
 }

@@ -5,7 +5,7 @@ namespace FoodShop.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<ICollection<AllProductsViewModel>> GetAllProductsAsync();
+        //Task<ICollection<AllProductsViewModel>> GetAllProductsAsync();
 
         Task<ProductDetailsViewModel> GetProductDetailsAsync(int id);
 
@@ -18,5 +18,7 @@ namespace FoodShop.Services.Interfaces
         Task EditProductAsync(AddOrEditProductViewModel model, int id);
 
         Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel model);
+
+        Task<bool> ExistByIdAsync(int id);
     }
 }

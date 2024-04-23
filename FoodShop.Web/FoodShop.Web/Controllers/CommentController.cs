@@ -45,7 +45,6 @@ namespace FoodShop.Web.Controllers
                 string userId = User.GetUserId()!;
                 await this.commentService.AddNewCommentAsync(model, model.ProductId, userId);
                 return RedirectToAction("Details", "Product", new {id = model.ProductId});
-
             }
             catch (Exception)
             {
