@@ -9,6 +9,7 @@ namespace FoodShop.Data.Models
         public Product()
         {
             this.Comments = new HashSet<Comment>();
+            this.UserProducts = new HashSet<UserProduct>();
         }
 
         [Key]
@@ -50,5 +51,7 @@ namespace FoodShop.Data.Models
         public bool IsActive { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<UserProduct> UserProducts { get; set; }
     }
 }

@@ -24,27 +24,21 @@ namespace FoodShop.Data
 
         public DbSet<ProductType> ProductTypes { get; set; } = null!;
 
-        public DbSet<Cart> Carts { get; set; } = null!;
-
-        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<UserProduct> UserProducts { get; set; } = null!;
 
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<UserProduct>()
+                   .HasKey(t => new { t.UserId, t.ProductId });
+            builder.Entity<UserProduct>()
+                   .Property(up => up.Date)
+                   .HasDefaultValue(DateTime.UtcNow.Date);
+
             Assembly configAssembly = Assembly.GetAssembly(typeof(FoodShopDbContext)) ?? 
                 Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(configAssembly);
-
-            builder.Entity<ApplicationUser>()
-                   .HasOne(u => u.Cart)
-                   .WithOne(c => c.User)
-                   .HasForeignKey<Cart>(c => c.UserId)
-                   .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Cart>()
-                   .Property(c => c.Totalprice)
-                   .HasPrecision(17, 2);
 
             base.OnModelCreating(builder);
         }

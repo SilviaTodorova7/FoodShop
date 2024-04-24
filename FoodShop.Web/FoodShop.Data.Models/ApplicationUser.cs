@@ -9,15 +9,12 @@ namespace FoodShop.Data.Models
         public ApplicationUser()
         {
             this.Comments = new HashSet<Comment>();
-            this.Cart = new Cart();
+            this.UserProducts = new HashSet<UserProduct>();
         }
 
         public ICollection<Comment> Comments { get; set; }
 
+        public ICollection<UserProduct> UserProducts { get; set; }
 
-        [ForeignKey(nameof(Cart))]
-        public int CartId { get; set; }
-
-        public Cart Cart { get; set; }
     }
 }

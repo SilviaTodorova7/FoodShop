@@ -1,4 +1,4 @@
-﻿@model CartViewModel
+﻿@* @model CartViewModel
 
 @{
     ViewBag.Title = "My Cart";
@@ -10,11 +10,14 @@
 <div class="row-cols-2" style="display: flex; justify-content: center">
     <div class="card mb-6">
         <div class="card-body">
-            @foreach(var item in Model.CartItems)
+            @foreach(var item in @Model.CartItems)
             {
                 <h4 class="card-title">@item.ProductName</h4>
                 <p class="card-text">@item.Count</p>
             }
+            <div>
+                <p>Total Price: @Model.Totalprice</p>
+            </div>
         </div>
     </div>
-</div>
+</div> *@

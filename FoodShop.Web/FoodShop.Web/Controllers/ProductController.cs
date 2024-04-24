@@ -1,5 +1,6 @@
 ﻿using FoodShop.Services.Interfaces;
 using FoodShop.Services.Models.Product;
+using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -304,5 +305,7 @@ namespace FoodShop.Web.Controllers
                 return RedirectToAction("All", "Product");
             }
         }
+
+        
     }
 }
