@@ -1,0 +1,20 @@
+﻿@model CartViewModel
+
+@{
+    ViewBag.Title = "My Cart";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr/>
+
+<div class="row-cols-2" style="display: flex; justify-content: center">
+    <div class="card mb-6">
+        <div class="card-body">
+            @foreach(var item in Model.CartItems)
+            {
+                <h4 class="card-title">@item.ProductName</h4>
+                <p class="card-text">@item.Count</p>
+            }
+        </div>
+    </div>
+</div>

@@ -21,6 +21,6 @@ namespace FoodShop.Data.Models
 
         public ICollection<CartItem> CartItems { get; set; }
 
-        public int Totalprice { get; set; }
+        public decimal Totalprice { get; set; }
     }
 }

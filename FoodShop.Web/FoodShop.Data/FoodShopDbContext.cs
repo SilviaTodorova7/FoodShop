@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
 
 namespace FoodShop.Data
 {
@@ -43,6 +41,10 @@ namespace FoodShop.Data
                    .WithOne(c => c.User)
                    .HasForeignKey<Cart>(c => c.UserId)
                    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Cart>()
+                   .Property(c => c.Totalprice)
+                   .HasPrecision(17, 2);
 
             base.OnModelCreating(builder);
         }
