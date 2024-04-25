@@ -306,6 +306,10 @@ namespace FoodShop.Web.Controllers
             }
         }
 
-        
+        //public Task<IActionResult> AddToCart(int id)
+        //{
+
+
+        //}
     }
 }
