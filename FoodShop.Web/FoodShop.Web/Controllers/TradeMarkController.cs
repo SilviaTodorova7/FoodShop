@@ -1,5 +1,6 @@
 ﻿using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
+using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.TradeMark;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,61 +29,94 @@ namespace FoodShop.Web.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            AddOrEditTradeMarkViewModel model = new AddOrEditTradeMarkViewModel();
+            if (User.IsAdmin())
+            {
+                AddOrEditTradeMarkViewModel model = new AddOrEditTradeMarkViewModel();
 
-            return View(model);
+                return View(model);
+            }
+
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddOrEditTradeMarkViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (User.IsAdmin())
             {
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                try
+                {
+                    await this.tradeMarkService.AddTradeMarkAsync(model);
+                    this.TempData[SuccessMessage] = "You have added new Trademark successfully!";
+                    return RedirectToAction("All", "TradeMark");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while adding Trademark. Please try again later or contact administrator!");
+                    return RedirectToAction("All", "TradeMark");
+                }
             }
 
-            try
-            {
-                await this.tradeMarkService.AddTradeMarkAsync(model);
-                this.TempData[SuccessMessage] = "You have added new Trademark successfully!";
-                return RedirectToAction("All", "TradeMark");
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(nameof(TradeMark), "Something went wrong while adding Trademark. Please try again later or contact administrator!");
-                return RedirectToAction("All", "TradeMark");
-            }
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            AddOrEditTradeMarkViewModel model = await this.tradeMarkService
-                .GetForEditTradeMarkAsync(id);
+            if (User.IsAdmin())
+            {
+                try
+                {
+                    AddOrEditTradeMarkViewModel model = await this.tradeMarkService
+                        .GetForEditTradeMarkAsync(id);
 
-            return View(model);
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while editing Trademark. Please try again later or contact administrator!");
+                    return RedirectToAction("All", "TradeMark");
+                }
+            }
+
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AddOrEditTradeMarkViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (User.IsAdmin())
             {
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                try
+                {
+                    await this.tradeMarkService.EditTradeMarkAsync(id, model);
+                    this.TempData[SuccessMessage] = "You have edited Trademark successfully!";
+
+                    return RedirectToAction("All", "TradeMark");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while editing Trademark. Please try again later or contact administrator!");
+                    return View(model);
+                }
+
             }
 
-            try
-            {
-                await this.tradeMarkService.EditTradeMarkAsync(id, model);
-                this.TempData[SuccessMessage] = "You have edited Trademark successfully!";
-
-                return RedirectToAction("All", "TradeMark");
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(nameof(TradeMark), "Something went wrong while editing Trademark. Please try again later or contact administrator!");
-                return View(model);
-            }
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
     }
 }

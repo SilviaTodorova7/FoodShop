@@ -1,5 +1,6 @@
 ﻿using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
+using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.ProductType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,40 +29,67 @@ namespace FoodShop.Web.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            AddOrEditProductTypeViewModel model = new AddOrEditProductTypeViewModel();
+            if (User.IsAdmin())
+            {
+                AddOrEditProductTypeViewModel model = new AddOrEditProductTypeViewModel();
 
-            return View(model);
+                return View(model);
+            }
+
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddOrEditProductTypeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (User.IsAdmin())
             {
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                try
+                {
+                    await this.productTypeService.AddProductTypeAsync(model);
+                    this.TempData[SuccessMessage] = "You have added Product Type successfully!";
+
+                    return RedirectToAction("All", "ProductType");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(ProductType), "Something went wrond while adding product type. Please try again later or contact administrator!");
+                    return View(model);
+                }
             }
 
-            try
-            {
-                await this.productTypeService.AddProductTypeAsync(model);
-                this.TempData[SuccessMessage] = "You have added Product Type successfully!";
-
-                return RedirectToAction("All", "ProductType");
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(nameof(ProductType), "Something went wrond while adding product type. Please try again later or contact administrator!");
-                return View(model);
-            }
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            AddOrEditProductTypeViewModel model = await this.productTypeService
-                .GetProductTypeForEditAsync(id);
+            if (User.IsAdmin())
+            {
+                try
+                {
+                    AddOrEditProductTypeViewModel model = await this.productTypeService
+                        .GetProductTypeForEditAsync(id);
 
-            return View(model);
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(ProductType), "Something went wrond while trying to edit product type. Please try again later or contact administrator!");
+
+                    return RedirectToAction("All", "ProductType");
+                }
+            }
+
+            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+            return RedirectToAction("All", "Product");
         }
 
         [HttpPost]
