@@ -2,8 +2,11 @@ using FoodShop.Data;
 using FoodShop.Data.Models;
 using FoodShop.Services;
 using FoodShop.Services.Interfaces;
+using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.Infrastructure.ModelBinders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static FoodShop.Common.GeneralApplicationConstants;
 
 namespace FoodShop.Web
 {
@@ -33,7 +36,9 @@ namespace FoodShop.Web
                 options.Password.RequiredLength = builder.Configuration
                 .GetValue<int>("Identity:Password:RequiredLength");
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<FoodShopDbContext>();
+
             builder.Services
                 .AddControllersWithViews()
                 .AddMvcOptions(options =>
@@ -67,6 +72,8 @@ namespace FoodShop.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(DevelopmentAdminEmail);
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();

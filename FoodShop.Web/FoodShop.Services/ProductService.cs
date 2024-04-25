@@ -35,7 +35,7 @@ namespace FoodShop.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<ICollection<AddToCartProductViewModel>> AddProductToCartProductAsync(int id, string userId)
+        public async Task<ICollection<AddToCartProductViewModel>> AddProductToCartAsync(int id, string userId)
         {
             Product productToAdd = await this.dbContext.Products
                 .FirstAsync(p => p.Id == id);
@@ -304,6 +304,9 @@ namespace FoodShop.Services
             return existByName;
         }
 
-
+        public Task<ICollection<AddToCartProductViewModel>> RemoveProductFromCartAsync(int id, string userId, ICollection<AddToCartProductViewModel> model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

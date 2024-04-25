@@ -14,21 +14,24 @@
             @foreach (var row in @Model)
             {
                 <div class="card mb-3" style="display: flex; flex-direction: row;">
-                <h4 class="card-title m-md-3 col-md-4">@row.ProductName</h4>
-                <p class="card-text m-md-3 col-md-4">Price: @row.ProductPrice</p>
-                <p class="card-text m-md-3 col-md-4">Count: @row.Count</p>
+                    <h4 class="card-title m-md-3 col-md-4">@row.ProductName</h4>
+                    <h6 class="card-text m-md-3 col-md-4">Count: @row.Count</h6>
+                    <h5 class="card-text m-md-3 col-md-4">Price: @row.ProductPrice</h5>
                 </div>
 
                 totalPrice += row.ProductPrice * row.Count;
 
                 <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end">
-                    <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@row.ProductId" class="btn btn-success btn-sm mb-2 w-50 fw-bold rounded btn-dark-text">+1</a>
+                    <a asp-method="post" asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@row.ProductId" class="btn btn-danger btn-sm mb-2 w-20 fw-bold rounded btn-dark-text"> -1</a>
+                </div>
+                <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end; margin-bottom: 1em;">
+                    <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@row.ProductId" class="btn btn-warning btn-sm mb-2 w-20 fw-bold rounded btn-dark-text">+1</a>
                 </div>
             }
-            <div>
-                <p class="m-md-3">Total Price: @totalPrice</p>
+            <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end">
+                <h4 class="m-md-3">Total Price: @totalPrice</h4>
             </div>
-            <div class="col-6 px-1">
+            <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end">
                 <a asp-controller="Product" asp-action="BuyProducts" asp-route-id="@Model" class="btn btn-success btn-sm mb-2 w-50 fw-bold rounded btn-dark-text">Buy Products</a>
             </div>
         </div>

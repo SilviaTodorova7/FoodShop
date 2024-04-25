@@ -5,6 +5,7 @@ using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Web.Controllers
@@ -310,10 +311,28 @@ namespace FoodShop.Web.Controllers
         public async Task<IActionResult> AddToCartAsync(int id)
         {
             string userId = this.User.GetUserId();
-            ICollection<AddToCartProductViewModel> model = await this.productService.AddProductToCartProductAsync(id, userId);
 
+            try
+            {
+                ICollection<AddToCartProductViewModel> model = await this.productService.AddProductToCartAsync(id, userId);
+                this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
+                return View(model);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while adding product to Cart. Please try again later or contact administrator!");
+                return RedirectToAction("All", "Product");
+            }
+        }
 
-            return View(model);
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCartAsync(int id, ICollection<AddToCartProductViewModel> model)
+        {
+            string userId = this.User.GetUserId();
+
+            ICollection<AddToCartProductViewModel> neWmodel = await this.productService.RemoveProductFromCartAsync(id, userId, model);
+
+            return View(neWmodel);
         }
     }
 }
