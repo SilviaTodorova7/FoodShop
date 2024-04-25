@@ -32,9 +32,6 @@ namespace FoodShop.Data
         {
             builder.Entity<UserProduct>()
                    .HasKey(t => new { t.UserId, t.ProductId });
-            builder.Entity<UserProduct>()
-                   .Property(up => up.Date)
-                   .HasDefaultValue(DateTime.UtcNow.Date);
 
             Assembly configAssembly = Assembly.GetAssembly(typeof(FoodShopDbContext)) ?? 
                 Assembly.GetExecutingAssembly();

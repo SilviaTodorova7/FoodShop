@@ -1,4 +1,5 @@
-﻿using FoodShop.Services.Interfaces;
+﻿using FoodShop.Data.Models;
+using FoodShop.Services.Interfaces;
 using FoodShop.Services.Models.Product;
 using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.Product;
@@ -306,10 +307,13 @@ namespace FoodShop.Web.Controllers
             }
         }
 
-        //public Task<IActionResult> AddToCart(int id)
-        //{
+        public async Task<IActionResult> AddToCartAsync(int id)
+        {
+            string userId = this.User.GetUserId();
+            ICollection<AddToCartProductViewModel> model = await this.productService.AddProductToCartProductAsync(id, userId);
 
 
-        //}
+            return View(model);
+        }
     }
 }

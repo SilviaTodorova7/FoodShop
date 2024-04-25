@@ -21,8 +21,5 @@ namespace FoodShop.Data.Models
         public Product Product { get; set; } = null!;
 
         public int Count { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
     }
 }

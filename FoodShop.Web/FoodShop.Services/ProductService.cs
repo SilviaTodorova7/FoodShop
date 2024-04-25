@@ -35,6 +35,58 @@ namespace FoodShop.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<ICollection<AddToCartProductViewModel>> AddProductToCartProductAsync(int id, string userId)
+        {
+            Product productToAdd = await this.dbContext.Products
+                .FirstAsync(p => p.Id == id);
+
+            UserProduct? userProduct = await this.dbContext
+                .UserProducts
+                .FirstOrDefaultAsync(up => up.UserId.ToString() == userId && up.ProductId == id);
+
+            if (userProduct == null)
+            {
+                UserProduct newUserProduct = new UserProduct()
+                {
+                    ProductId = id,
+                    UserId = Guid.Parse(userId),
+                    Count = 1,
+                };
+
+                this.dbContext.UserProducts.Add(newUserProduct);
+                this.dbContext.SaveChanges();
+            }
+            else
+            {
+                userProduct.Count += 1;
+                this.dbContext.SaveChanges();
+            }
+
+            AddToCartProductViewModel productRow = new AddToCartProductViewModel()
+            {
+                ProductId = id,
+                ProductName = productToAdd.Name,
+                ProductPrice = productToAdd.Price,
+                Count = 1,
+                UserId = userId,
+            };
+
+            ICollection<AddToCartProductViewModel> productRowsModel = await this.dbContext
+                .UserProducts
+                .Where(up => up.UserId.ToString() == userId)
+                .Select(up => new AddToCartProductViewModel()
+                {
+                    ProductId = up.ProductId,
+                    ProductName = up.Product.Name,
+                    ProductPrice = up.Product.Price,
+                    Count = up.Count,
+                    UserId = userId,
+                })
+                .ToArrayAsync();
+
+            return productRowsModel;
+        }
+
         public async Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel queryModel)
         {
             IQueryable<Product> productsQuery = dbContext.Products.AsQueryable();
@@ -91,14 +143,14 @@ namespace FoodShop.Services
                     TradeMark = p.TradeMark.Name,
                 }).ToArrayAsync();
 
-                int totalProducts = productsQuery.Count();
+            int totalProducts = productsQuery.Count();
 
             return new AllProductsFilteredAndPagedServiceModel()
             {
                 TotalProducts = totalProducts,
                 Products = allProducts,
             };
-            
+
         }
 
         public async Task DeleteProductByIdAsync(int id, DeleteProductViewModel model)
@@ -144,25 +196,6 @@ namespace FoodShop.Services
             return existById;
         }
 
-        //public async Task<ICollection<AllProductsViewModel>> GetAllProductsAsync()
-        //{
-        //    AllProductsViewModel[] model = await this.dbContext
-        //        .Products
-        //        .Select(p => new AllProductsViewModel()
-        //    {
-        //        Id = p.Id,
-        //        Name = p.Name,
-        //        Category = p.Category.Name,
-        //        TradeMark = p.TradeMark.Name,
-        //        ProductType = p.ProductType.Name,
-        //        Price = p.Price,
-        //        PictureUrl = p.PictureUrl,
-        //    })
-        //        .ToArrayAsync();
-
-        //    return model;
-        //}
-
         public async Task<ProductDetailsViewModel> GetProductDetailsAsync(int id)
         {
             Product product = await this.dbContext
@@ -195,7 +228,7 @@ namespace FoodShop.Services
                 Price = product.Price.ToString(),
                 PictureUrl = product.PictureUrl,
             };
-            
+
             if (comments != null)
             {
                 model.Comments = comments;
@@ -270,6 +303,7 @@ namespace FoodShop.Services
 
             return existByName;
         }
+
 
     }
 }

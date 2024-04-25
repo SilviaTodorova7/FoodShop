@@ -5,8 +5,6 @@ namespace FoodShop.Services.Interfaces
 {
     public interface IProductService
     {
-        //Task<ICollection<AllProductsViewModel>> GetAllProductsAsync();
-
         Task<ProductDetailsViewModel> GetProductDetailsAsync(int id);
 
         Task<AddOrEditProductViewModel> GetProductForEditAsync(int id);
@@ -24,5 +22,7 @@ namespace FoodShop.Services.Interfaces
         Task<DeleteProductViewModel> GetProductViewDetailsToDeleteAsync(int id);
 
         Task DeleteProductByIdAsync(int id, DeleteProductViewModel model);
+
+        Task<ICollection<AddToCartProductViewModel>> AddProductToCartProductAsync(int id, string userId);
     }
 }
