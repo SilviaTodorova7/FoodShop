@@ -61,28 +61,6 @@ namespace FoodShop.Services
                 userProduct.Count += 1;
                 this.dbContext.SaveChanges();
             }
-
-            //AddToCartProductViewModel productRow = new AddToCartProductViewModel()
-            //{
-            //    ProductId = id,
-            //    ProductName = productToAdd.Name,
-            //    ProductPrice = productToAdd.Price,
-            //    Count = 1,
-            //    UserId = userId,
-            //};
-
-            //ICollection<CartProductViewModel> productRowsModel = await this.dbContext
-            //    .UserProducts
-            //    .Where(up => up.UserId.ToString() == userId)
-            //    .Select(up => new CartProductViewModel()
-            //    {
-            //        ProductId = up.ProductId,
-            //        ProductName = up.Product.Name,
-            //        ProductPrice = up.Product.Price,
-            //        Count = up.Count,
-            //        UserId = userId,
-            //    })
-            //    .ToArrayAsync();
         }
 
         public async Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel queryModel)
@@ -302,9 +280,23 @@ namespace FoodShop.Services
             return existByName;
         }
 
-        public Task<ICollection<CartProductViewModel>> RemoveProductFromCartAsync(int id, string userId, ICollection<CartProductViewModel> model)
+        public async Task RemoveProductFromCartAsync(int id, string userId)
         {
-            throw new NotImplementedException();
+            UserProduct userProductToRemove = await this.dbContext
+                .UserProducts
+                .FirstAsync(up => up.UserId.ToString() == userId && up.ProductId == id);
+
+            if (userProductToRemove.Count > 1)
+            {
+                userProductToRemove.Count -= 1;
+
+                this.dbContext.SaveChanges();
+            }
+            else if(userProductToRemove.Count == 1)
+            {
+                this.dbContext.UserProducts.Remove(userProductToRemove);
+                this.dbContext.SaveChanges(true);
+            }
         }
     }
 }

@@ -357,12 +357,13 @@ namespace FoodShop.Web.Controllers
 
         }
 
+
         public async Task<IActionResult> AddToCartAsync(int id)
         {
             string userId = this.User.GetUserId();
 
             try
-            {
+            { 
                 await this.productService.AddProductToCartAsync(id, userId);
                 this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
                 return RedirectToAction("Cart", "Cart");
@@ -374,14 +375,13 @@ namespace FoodShop.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveFromCartAsync(int id, ICollection<CartProductViewModel> model)
+        public async Task<IActionResult> RemoveFromCartAsync(int id)
         {
             string userId = this.User.GetUserId();
 
-            ICollection<CartProductViewModel> neWmodel = await this.productService.RemoveProductFromCartAsync(id, userId, model);
+            await this.productService.RemoveProductFromCartAsync(id, userId);
 
-            return View(neWmodel);
+            return RedirectToAction("Cart", "Cart");
         }
     }
 }

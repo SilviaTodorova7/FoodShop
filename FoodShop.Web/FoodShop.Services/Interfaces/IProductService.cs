@@ -25,6 +25,6 @@ namespace FoodShop.Services.Interfaces
 
         Task AddProductToCartAsync(int id, string userId);
 
-        Task<ICollection<CartProductViewModel>> RemoveProductFromCartAsync(int id, string userId, ICollection<CartProductViewModel> model);
+        Task RemoveProductFromCartAsync(int id, string userId);
     }
 }
