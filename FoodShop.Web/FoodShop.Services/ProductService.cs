@@ -35,7 +35,7 @@ namespace FoodShop.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<ICollection<AddToCartProductViewModel>> AddProductToCartAsync(int id, string userId)
+        public async Task AddProductToCartAsync(int id, string userId)
         {
             Product productToAdd = await this.dbContext.Products
                 .FirstAsync(p => p.Id == id);
@@ -62,29 +62,27 @@ namespace FoodShop.Services
                 this.dbContext.SaveChanges();
             }
 
-            AddToCartProductViewModel productRow = new AddToCartProductViewModel()
-            {
-                ProductId = id,
-                ProductName = productToAdd.Name,
-                ProductPrice = productToAdd.Price,
-                Count = 1,
-                UserId = userId,
-            };
+            //AddToCartProductViewModel productRow = new AddToCartProductViewModel()
+            //{
+            //    ProductId = id,
+            //    ProductName = productToAdd.Name,
+            //    ProductPrice = productToAdd.Price,
+            //    Count = 1,
+            //    UserId = userId,
+            //};
 
-            ICollection<AddToCartProductViewModel> productRowsModel = await this.dbContext
-                .UserProducts
-                .Where(up => up.UserId.ToString() == userId)
-                .Select(up => new AddToCartProductViewModel()
-                {
-                    ProductId = up.ProductId,
-                    ProductName = up.Product.Name,
-                    ProductPrice = up.Product.Price,
-                    Count = up.Count,
-                    UserId = userId,
-                })
-                .ToArrayAsync();
-
-            return productRowsModel;
+            //ICollection<CartProductViewModel> productRowsModel = await this.dbContext
+            //    .UserProducts
+            //    .Where(up => up.UserId.ToString() == userId)
+            //    .Select(up => new CartProductViewModel()
+            //    {
+            //        ProductId = up.ProductId,
+            //        ProductName = up.Product.Name,
+            //        ProductPrice = up.Product.Price,
+            //        Count = up.Count,
+            //        UserId = userId,
+            //    })
+            //    .ToArrayAsync();
         }
 
         public async Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel queryModel)
@@ -304,7 +302,7 @@ namespace FoodShop.Services
             return existByName;
         }
 
-        public Task<ICollection<AddToCartProductViewModel>> RemoveProductFromCartAsync(int id, string userId, ICollection<AddToCartProductViewModel> model)
+        public Task<ICollection<CartProductViewModel>> RemoveProductFromCartAsync(int id, string userId, ICollection<CartProductViewModel> model)
         {
             throw new NotImplementedException();
         }

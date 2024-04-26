@@ -5,6 +5,8 @@ using FoodShop.Web.Infrastructure.Extensions;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Security.Cryptography.X509Certificates;
 using static FoodShop.Common.NotificationMessagesConstants;
 
@@ -361,9 +363,9 @@ namespace FoodShop.Web.Controllers
 
             try
             {
-                ICollection<AddToCartProductViewModel> model = await this.productService.AddProductToCartAsync(id, userId);
+                await this.productService.AddProductToCartAsync(id, userId);
                 this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
-                return View(model);
+                return RedirectToAction("Cart", "Cart");
             }
             catch (Exception)
             {
@@ -373,11 +375,11 @@ namespace FoodShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromCartAsync(int id, ICollection<AddToCartProductViewModel> model)
+        public async Task<IActionResult> RemoveFromCartAsync(int id, ICollection<CartProductViewModel> model)
         {
             string userId = this.User.GetUserId();
 
-            ICollection<AddToCartProductViewModel> neWmodel = await this.productService.RemoveProductFromCartAsync(id, userId, model);
+            ICollection<CartProductViewModel> neWmodel = await this.productService.RemoveProductFromCartAsync(id, userId, model);
 
             return View(neWmodel);
         }

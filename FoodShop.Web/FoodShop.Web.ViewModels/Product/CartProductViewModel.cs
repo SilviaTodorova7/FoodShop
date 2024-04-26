@@ -2,7 +2,7 @@
 
 namespace FoodShop.Web.ViewModels.Product
 {
-    public class AddToCartProductViewModel
+    public class CartProductViewModel
     {
         public string UserId { get; set; } = null!;
 
