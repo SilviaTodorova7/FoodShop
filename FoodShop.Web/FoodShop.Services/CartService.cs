@@ -1,7 +1,9 @@
 ﻿using FoodShop.Data;
+using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.Product;
 using Microsoft.EntityFrameworkCore;
+using static FoodShop.Common.NotificationMessagesConstants;
 
 namespace FoodShop.Services
 {
@@ -13,6 +15,26 @@ namespace FoodShop.Services
         {
             this.dbContext = dbContext;
         }
+
+        public async Task BuyProductsAsync(string userId)
+        {
+            ICollection<UserProduct> userProductsToBuy = await this.dbContext
+                .UserProducts
+                .Where(up => up.UserId.ToString() == userId)
+                .ToArrayAsync();
+
+            foreach (var up in userProductsToBuy)
+            {
+                Product productToBuy = await this.dbContext.Products
+                    .FirstAsync(p => p.Id == up.ProductId);
+
+                    productToBuy.Quantity -= up.Count;
+            }
+
+            this.dbContext.UserProducts.RemoveRange(userProductsToBuy);
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<ICollection<CartProductViewModel>> GoToCart(string userId)
         {
             ICollection<CartProductViewModel> productRowsModel = await this.dbContext

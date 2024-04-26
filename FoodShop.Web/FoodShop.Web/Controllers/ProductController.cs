@@ -366,7 +366,7 @@ namespace FoodShop.Web.Controllers
             { 
                 await this.productService.AddProductToCartAsync(id, userId);
                 this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
-                return RedirectToAction("Cart", "Cart");
+                return RedirectToAction("MyCart", "Cart");
             }
             catch (Exception)
             {
@@ -379,9 +379,17 @@ namespace FoodShop.Web.Controllers
         {
             string userId = this.User.GetUserId();
 
-            await this.productService.RemoveProductFromCartAsync(id, userId);
-
-            return RedirectToAction("Cart", "Cart");
+            try
+            {
+                await this.productService.RemoveProductFromCartAsync(id, userId);
+                this.TempData[WarningMessage] = "You have successfully removed product from Cart!";
+                return RedirectToAction("MyCart", "Cart");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occured while removing product to Cart. Please try again later or contact administrator!");
+                return RedirectToAction("All", "Product");
+            }
         }
     }
 }
