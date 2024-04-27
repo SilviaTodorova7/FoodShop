@@ -363,9 +363,17 @@ namespace FoodShop.Web.Controllers
             string userId = this.User.GetUserId();
 
             try
-            { 
-                await this.productService.AddProductToCartAsync(id, userId);
-                this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
+            {
+                bool result = await this.productService.AddProductToCartAsync(id, userId);
+
+                if (result == true)
+                {
+                    this.TempData[SuccessMessage] = "You have successfully added product to Cart!";
+                }
+                else
+                {
+                    this.TempData[WarningMessage] = "Sorry, we don't have any more of this Product!";
+                }
                 return RedirectToAction("MyCart", "Cart");
             }
             catch (Exception)

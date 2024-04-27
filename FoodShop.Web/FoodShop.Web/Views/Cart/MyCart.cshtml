@@ -24,7 +24,7 @@
                     totalPrice += row.ProductPrice * row.Count;
 
                     <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end">
-                        <a asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@row.ProductId" class="btn btn-danger btn-sm mb-2 w-20 fw-bold rounded btn-dark-text"> -1</a>
+                        <a asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@row.ProductId" class="btn btn-danger btn-sm mb-2 w-20 fw-bold rounded btn-dark-text">-1</a>
                     </div>
                     <div class="col-12 px-1" style="display: flex; flex-direction: row; justify-content: end; margin-bottom: 1em;">
                         <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@row.ProductId" class="btn btn-warning btn-sm mb-2 w-20 fw-bold rounded btn-dark-text">+1</a>

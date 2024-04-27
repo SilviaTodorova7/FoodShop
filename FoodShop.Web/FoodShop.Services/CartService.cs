@@ -16,7 +16,7 @@ namespace FoodShop.Services
             this.dbContext = dbContext;
         }
 
-        public async Task BuyProductsAsync(string userId)
+        public async Task<string> BuyProductsAsync(string userId)
         {
             ICollection<UserProduct> userProductsToBuy = await this.dbContext
                 .UserProducts
@@ -28,11 +28,16 @@ namespace FoodShop.Services
                 Product productToBuy = await this.dbContext.Products
                     .FirstAsync(p => p.Id == up.ProductId);
 
+                if (productToBuy.Quantity < up.Count)
+                {
+                    return $"{productToBuy.Quantity} {productToBuy.Name}";
+                }
                     productToBuy.Quantity -= up.Count;
             }
 
             this.dbContext.UserProducts.RemoveRange(userProductsToBuy);
             await this.dbContext.SaveChangesAsync();
+            return string.Empty;
         }
 
         public async Task<ICollection<CartProductViewModel>> GoToCart(string userId)

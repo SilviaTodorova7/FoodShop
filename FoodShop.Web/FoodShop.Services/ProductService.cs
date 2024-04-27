@@ -35,10 +35,15 @@ namespace FoodShop.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddProductToCartAsync(int id, string userId)
+        public async Task<bool> AddProductToCartAsync(int id, string userId)
         {
             Product productToAdd = await this.dbContext.Products
                 .FirstAsync(p => p.Id == id);
+
+            if (productToAdd.Quantity == 0)
+            {
+                return false;
+            }
 
             UserProduct? userProduct = await this.dbContext
                 .UserProducts
@@ -52,7 +57,7 @@ namespace FoodShop.Services
                     UserId = Guid.Parse(userId),
                     Count = 1,
                 };
-
+                
                 this.dbContext.UserProducts.Add(newUserProduct);
                 this.dbContext.SaveChanges();
             }
@@ -61,6 +66,8 @@ namespace FoodShop.Services
                 userProduct.Count += 1;
                 this.dbContext.SaveChanges();
             }
+
+            return true;
         }
 
         public async Task<AllProductsFilteredAndPagedServiceModel> AllAsync(AllProductQueryModel queryModel)
@@ -292,7 +299,7 @@ namespace FoodShop.Services
 
                 this.dbContext.SaveChanges();
             }
-            else if(userProductToRemove.Count == 1)
+            else if (userProductToRemove.Count == 1)
             {
                 this.dbContext.UserProducts.Remove(userProductToRemove);
                 this.dbContext.SaveChanges(true);

@@ -35,16 +35,24 @@ namespace FoodShop.Web.Controllers
             }
         }
 
-        public async Task<IActionResult> BuyProducts()
+        public async Task<IActionResult>BuyProducts()
         {
             string userId = this.User.GetUserId();
 
             try
             {
-                await this.cartService.BuyProductsAsync(userId);
-                this.TempData[SuccessMessage] = "You have successfully bought Products!";
+                string result = await this.cartService.BuyProductsAsync(userId);
+
+                if (result == string.Empty)
+                {
+                    this.TempData[SuccessMessage] = "You have successfully bought Products!";
+
+                    return RedirectToAction("MyCart", "Cart");
+                }
+                this.TempData[WarningMessage] = $"Sorry, we have only {result} Products! Please correct Your Cart!";
 
                 return RedirectToAction("MyCart", "Cart");
+
             }
             catch (Exception)
             {

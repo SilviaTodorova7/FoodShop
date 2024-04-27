@@ -23,7 +23,7 @@ namespace FoodShop.Services.Interfaces
 
         Task DeleteProductByIdAsync(int id, DeleteProductViewModel model);
 
-        Task AddProductToCartAsync(int id, string userId);
+        Task<bool> AddProductToCartAsync(int id, string userId);
 
         Task RemoveProductFromCartAsync(int id, string userId);
     }

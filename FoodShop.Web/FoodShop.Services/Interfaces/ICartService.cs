@@ -6,6 +6,6 @@ namespace FoodShop.Services.Interfaces
     {
         Task<ICollection<CartProductViewModel>> GoToCart(string userId);
 
-        Task BuyProductsAsync(string userId);
+        Task<string> BuyProductsAsync(string userId);
     }
 }
