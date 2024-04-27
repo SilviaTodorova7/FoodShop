@@ -15,6 +15,7 @@ namespace FoodShop.Services
         {
             this.dbContext = dbContext;
         }
+
         public async Task AddNewCommentAsync(AddCommentViewModel model, int productId, string userId)
         {
             ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id == Guid.Parse(userId));

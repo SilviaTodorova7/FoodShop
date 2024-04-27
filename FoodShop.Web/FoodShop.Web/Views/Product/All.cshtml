@@ -10,7 +10,7 @@
         <div class="form-group col-md-2 d-flex justify-content-between">
             <div class="form-group">
                 <label asp-for="Category"></label>
-                <select asp-for="Category" class="form-control">
+                <select asp-for="Category" class="form-control" style="width:12.2em">
                     <option value="">All</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -22,7 +22,7 @@
         <div class="form-group col-md-2 d-flex justify-content-between">
             <div class="form-group">
                 <label asp-for="TradeMark"></label>
-                <select asp-for="TradeMark" class="form-control">
+                <select asp-for="TradeMark" class="form-control" style="width:12.2em">
                     <option value="">All</option>
                     @foreach (var tradeMark in Model.TradeMarks)
                     {
@@ -34,7 +34,7 @@
         <div class="form-group col-md-2 d-flex justify-content-between">
             <div class="form-group">
                 <label asp-for="ProductType"></label>
-                <select asp-for="ProductType" class="form-control">
+                <select asp-for="ProductType" class="form-control" style="width:12.2em">
                     <option value="">All</option>
                     @foreach (var productType in Model.ProductTypes)
                     {
@@ -47,7 +47,7 @@
         <div class="form-group col-md-2 d-flex justify-content-between">
         <div class="form-group">
             <label asp-for="ProductsPerPage"></label>
-            <select asp-for="ProductsPerPage" class="form-control">
+                <select asp-for="ProductsPerPage" class="form-control" style="width:12.2em">
                 <option value="4">4</option>
                 <option value="8">8</option>
                 <option value="12">12</option>
@@ -69,10 +69,10 @@
                 </select>
             </div>
         </div>
-        <div class="form-group col-md-2 d-flex" style="flex-direction: column-reverse; align-items: start;">
-            <div class="form-group col-md-2" >
-                <input type="submit" value="Search" class="btn btn-primary" style="width:12.2em"/>
-            </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12 d-flex justify-content-end" style="padding-top: 1em;">
+                <input type="submit" value="Search" class="btn btn-primary" style="width:12.2em" />
         </div>
     </div>
 </form>

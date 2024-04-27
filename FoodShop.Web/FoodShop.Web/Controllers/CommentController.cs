@@ -35,6 +35,7 @@ namespace FoodShop.Web.Controllers
         public async Task<IActionResult> Add(AddCommentViewModel model)
         {
             model.UserName = User.Identity!.Name!;
+
             if (!ModelState.IsValid)
             {
                return View(model);

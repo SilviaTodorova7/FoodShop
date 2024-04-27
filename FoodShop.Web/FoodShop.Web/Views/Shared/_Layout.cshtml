@@ -25,27 +25,24 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="All">Index</a>
-                        </li>
+                    <ul class="navbar-nav flex-grow-1" style="justify-content: end">
                         @if (User.IsAdmin())
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add product</a>
+                                <a class="nav-link text-dark" style="padding-left: 1em; padding-right: 1em;" asp-area="" asp-controller="Product" asp-action="Add">Add product</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ProductType" asp-action="All">All Product Types</a>
+                                <a class="nav-link text-dark" style="padding-left: 1em; padding-right: 1em;" asp-area="" asp-controller="ProductType" asp-action="All">All Product Types</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="All">All Categories</a>
+                                <a class="nav-link text-dark" style="padding-left: 1em; padding-right: 1em;" asp-area="" asp-controller="Category" asp-action="All">All Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TradeMark" asp-action="All">All Trademarks</a>
+                                <a class="nav-link text-dark" style="padding-left: 1em; padding-right: 1em;" asp-area="" asp-controller="TradeMark" asp-action="All">All Trademarks</a>
                             </li>
                         }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="MyCart">Cart</a>
+                                <a class="nav-link text-dark btn btn-primary" style="background-color:darkgray; border:hidden; padding-left: 2em; padding-right: 2em; margin-left: 1em; margin-right: 1em; border-radius: 0.3em; font-weight: bold; font-size: 1em; color: white;" asp-area="" asp-controller="Cart" asp-action="MyCart">My Cart</a>
                             </li>
                     </ul>
                     <partial name="_LoginPartial" />
