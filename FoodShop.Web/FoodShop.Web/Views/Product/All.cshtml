@@ -97,6 +97,7 @@ string.Empty)"
            asp-route-tradeMark="@Model.TradeMark"
            asp-route-productType="@Model.ProductType"
            asp-route-searchString="@Model.SearchString"
+           asp-route-productsPerPage="@Model.ProductsPerPage"
            asp-route-productSorting="@((int)Model.ProductSorting)"><<</a>
     </div>
     @{
@@ -110,7 +111,10 @@ string.Empty)"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-category="@Model.Category"
-           asp-route-searchTerm="@Model.SearchString"
+           asp-route-tradeMark="@Model.TradeMark"
+           asp-route-productType="@Model.ProductType"
+           asp-route-searchString="@Model.SearchString"
+           asp-route-productsPerPage="@Model.ProductsPerPage"
            asp-route-sorting="@((int)Model.ProductSorting)">>></a>
     </div>
 </div>
