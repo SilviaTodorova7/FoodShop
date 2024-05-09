@@ -21,7 +21,7 @@ namespace FoodShop.Web
             builder.Services.AddDbContext<FoodShopDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
                 options.SignIn.RequireConfirmedAccount = builder.Configuration
                 .GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");

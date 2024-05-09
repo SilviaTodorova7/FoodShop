@@ -79,7 +79,7 @@ namespace FoodShop.Web.Controllers
                     AddOrEditCategoryViewModel model = await this.categoryService
                         .GetCategoryForEditAsync(id);
 
-                    return RedirectToAction("All", "Category");
+                    return View(model);
                 }
                 catch (Exception)
                 {

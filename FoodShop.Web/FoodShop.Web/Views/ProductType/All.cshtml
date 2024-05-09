@@ -12,13 +12,10 @@
             @foreach (var e in Model)
             {
                 <h2 class="card-title text-center">@e.Name</h2>
-                <a asp-controller="ProductType" asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
-                <a asp-controller="ProductType" asp-action="Delete" asp-route-id="@e.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
-                <p></p>
-                <p></p>
+                <a asp-controller="ProductType" asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-4 w-100 p-3 fw-bold">Edit</a>
             }
         </div>
-        <a asp-controller="ProductType" asp-action="Add" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Product Type</a>
+        <a asp-controller="ProductType" asp-action="Add" class="btn btn-success btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Product Type</a>
     </div>
 </div>
 

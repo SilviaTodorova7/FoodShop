@@ -1,2 +1,2 @@
-﻿This application supports administrator area.
+﻿This application supports administrator role.
 Please seed administrator.
