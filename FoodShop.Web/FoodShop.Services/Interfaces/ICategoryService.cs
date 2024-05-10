@@ -1,4 +1,5 @@
 ﻿using FoodShop.Web.ViewModels.Category;
+using FoodShop.Web.ViewModels.Product;
 
 namespace FoodShop.Services.Interfaces
 {
@@ -15,5 +16,9 @@ namespace FoodShop.Services.Interfaces
         Task EditCategoryAsync(int id, AddOrEditCategoryViewModel model);
 
         Task<bool> CategoryExistsByIdAsync(int id);
+
+        Task<ICollection<ProductFromCategoryViewModel>> GetProductsFromCategoryAsync(int id);
+
+        Task<CategoryViewModel> GetCategoryAndProductsAsync(int id);
     }
 }

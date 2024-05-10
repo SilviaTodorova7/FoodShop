@@ -17,8 +17,8 @@ namespace FoodShop.Services.Interfaces
 
         Task<bool> TradeMarkExistsByIdAsync(int? id);
 
-        Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMark(int id);
+        Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMarkAsync(int id);
 
-        Task<TradeMarkViewModel> GetTradeMarkAndProducts(int id);
+        Task<TradeMarkViewModel> GetTradeMarkAndProductsAsync(int id);
     }
 }

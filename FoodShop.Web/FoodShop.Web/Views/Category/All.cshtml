@@ -12,7 +12,8 @@
             @foreach (var e in Model)
             {
                 <h2 class="card-title text-center">@e.Name</h2>
-                <a asp-controller="Category" asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-4 w-100 p-3 fw-bold">Edit</a>
+                <a asp-controller="Category" asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-2 fw-bold">Edit</a>
+                <a asp-controller="Category" asp-action="ViewProducts" asp-route-id="@e.Id" class="btn btn-warning btn-dark-text btn-rounded mb-4 w-100 p-2 fw-bold">View Products from Category</a>
             }
         </div>
         <a asp-controller="Category" asp-action="Add" class="btn btn-success btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Category</a>

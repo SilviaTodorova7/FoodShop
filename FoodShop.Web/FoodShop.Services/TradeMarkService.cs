@@ -69,7 +69,7 @@ namespace FoodShop.Services
             return model;
         }
 
-        public async Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMark(int id)
+        public async Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMarkAsync(int id)
         {
             ICollection<ProductFromTradeMarkViewModel> products = await this.dbContext
                 .Products
@@ -86,7 +86,7 @@ namespace FoodShop.Services
             return products;
         }
 
-        public async Task<TradeMarkViewModel> GetTradeMarkAndProducts(int id)
+        public async Task<TradeMarkViewModel> GetTradeMarkAndProductsAsync(int id)
         {
             TradeMark trademark = await dbContext.TradeMarks.FirstAsync(t => t.Id == id);
 
@@ -94,7 +94,7 @@ namespace FoodShop.Services
             {
                 Id = id,
                 Name = trademark.Name,
-                Products = await this.GetProductsFromTradeMark(id),
+                Products = await this.GetProductsFromTradeMarkAsync(id),
             };
 
             return model;

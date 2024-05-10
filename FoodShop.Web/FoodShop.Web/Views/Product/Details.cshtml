@@ -24,14 +24,14 @@
             <p class="card-text"><small class="text-muted">@Model.ProductType</small></p>
             <p class="card-text"><small class="text-muted">Price: @Model.Price</small></p>
         </div>
-        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Buy Product</a>
-        <a asp-controller="Product" asp-action="All" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Back to All Products</a>
+        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success btn-dark-text btn-rounded mb-2 w-100 p-2 fw-bold">Buy Product</a>
+        <a asp-controller="Product" asp-action="All" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-2 fw-bold">Back to All Products</a>
         @if (User.IsAdmin())
         {
-            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
-            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
+            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-2 fw-bold">Edit</a>
+            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-2 fw-bold">Delete</a>
         }
-        <a asp-controller="Comment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Add Comment</a>
+        <a asp-controller="Comment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-2 fw-bold">Add Comment</a>
     </div>
 </div>
 

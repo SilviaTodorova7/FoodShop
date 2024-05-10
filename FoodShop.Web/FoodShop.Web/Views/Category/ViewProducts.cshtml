@@ -1,13 +1,13 @@
-﻿@model TradeMarkViewModel
+﻿@model CategoryViewModel
 
 @{
     if (Model.Products.Count == 0)
     {
-        ViewBag.Title = $"You don't have any products from Trademark {Model.Name}";
+        ViewBag.Title = $"You don't have any products from Category {Model.Name}";
     }
     else
     {
-        ViewBag.Title = $"Products from Trademark {Model.Name}: {Model.Products.Count}";
+        ViewBag.Title = $"Products from Category {Model.Name}: {Model.Products.Count}";
     }
 }
 
@@ -32,9 +32,9 @@
                     </div>
                 }
             }
-                <div class="text-center">
-                    <a asp-controller="TradeMark" asp-action="All" class="btn btn-success btn-sm mb-2 w-100 fw-bold rounded btn-dark-text" style="padding: 0.5em; margin-top: 2em; font-size: 1.2em;">Back to All Trademarks</a>
-                </div>
+            <div class="text-center">
+                <a asp-controller="Category" asp-action="All" class="btn btn-success btn-sm mb-2 w-100 fw-bold rounded btn-dark-text" style="padding: 0.5em; margin-top: 2em; font-size: 1.2em;">Back to All Categories</a>
+            </div>
         </div>
     </div>
 </div>

@@ -122,6 +122,7 @@ namespace FoodShop.Web.Controllers
                 catch (Exception)
                 {
                     ModelState.AddModelError(nameof(TradeMark), "Something went wrong while editing Trademark. Please try again later or contact administrator!");
+
                     return View(model);
                 }
 
@@ -142,13 +143,14 @@ namespace FoodShop.Web.Controllers
                 try
                 {
                     TradeMarkViewModel model = await this.tradeMarkService
-                        .GetTradeMarkAndProducts(id);
+                        .GetTradeMarkAndProductsAsync(id);
 
                     return View(model);
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while adding Trademark. Please try again later or contact administrator!");
+                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while trying to view products from Trademark. Please try again later or contact administrator!");
+                    this.TempData[ErrorMessage] = "Something went wrong while trying to view products from Trademark. Please try again later or contact administrator!";
 
                     return RedirectToAction("All", "TradeMark");
                 }

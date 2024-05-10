@@ -35,9 +35,12 @@ namespace FoodShop.Web.Controllers
 
                 return View(model);
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
@@ -64,9 +67,12 @@ namespace FoodShop.Web.Controllers
                     return View(model);
                 }
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpGet]
@@ -86,10 +92,12 @@ namespace FoodShop.Web.Controllers
                     return RedirectToAction("All", "Category");
                 }
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
-
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
@@ -113,12 +121,44 @@ namespace FoodShop.Web.Controllers
                 {
                     this.TempData[ErrorMessage] = "Something went wrong while editing category. Please try again later or contact administrator!";
                     ModelState.AddModelError(nameof(Category), "Something went wrong while editing category. Please try again later or contact administrator!");
+
                     return View(model);
                 }
             }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
+        }
 
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+        [HttpGet]
+        public async Task<IActionResult> ViewProducts(int id)
+        {
+            if (User.IsAdmin())
+            {
+                try
+                {
+                    CategoryViewModel model = await this.categoryService
+                    .GetCategoryAndProductsAsync(id);
+
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(Category), "Something went wrong while trying to view products from category. Please try again later or contact administrator!");
+                    this.TempData[ErrorMessage] = "Something went wrong while trying to view products from category. Please try again later or contact administrator!";
+
+                    return RedirectToAction("All", "Category");
+                }
+            }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+
+                return RedirectToAction("All", "Product");
+            }
         }
     }
 }

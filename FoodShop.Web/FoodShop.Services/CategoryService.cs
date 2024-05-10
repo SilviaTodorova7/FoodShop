@@ -2,6 +2,7 @@
 using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.ViewModels.Category;
+using FoodShop.Web.ViewModels.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodShop.Services
@@ -61,6 +62,24 @@ namespace FoodShop.Services
             return await this.dbContext.Categories.Select(c => c.Name).ToArrayAsync();
         }
 
+        public async Task<CategoryViewModel> GetCategoryAndProductsAsync(int id)
+        {
+            ICollection<ProductFromCategoryViewModel> products = await this.GetProductsFromCategoryAsync(id);
+
+            Category category = await this.dbContext
+                .Categories
+                .FirstAsync(c => c.Id == id);
+
+            CategoryViewModel model = new CategoryViewModel()
+            {
+                Id = id,
+                Name = category.Name,
+                Products = await this.GetProductsFromCategoryAsync(id),
+            };
+
+            return model;
+        }
+
         public async Task<AddOrEditCategoryViewModel> GetCategoryForEditAsync(int id)
         {
             Category category = await this.dbContext.Categories
@@ -72,6 +91,24 @@ namespace FoodShop.Services
             };
 
             return viewModel;
+        }
+
+        public async Task<ICollection<ProductFromCategoryViewModel>> GetProductsFromCategoryAsync(int id)
+        {
+            ICollection<ProductFromCategoryViewModel> products = await this.dbContext
+                .Products
+                .Where(p => p.CategoryId == id)
+                .Select(p => new ProductFromCategoryViewModel()
+                {
+                    CategoryId = id,
+                    ProductId = p.Id,
+                    ProductName = p.Name,
+                    ProductPrice = p.Price,
+                    Count = p.Quantity,
+                })
+                .ToArrayAsync();
+
+            return products;
         }
     }
 }
