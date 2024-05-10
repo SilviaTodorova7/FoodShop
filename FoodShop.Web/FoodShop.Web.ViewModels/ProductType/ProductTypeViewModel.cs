@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodShop.Web.ViewModels.Product;
+using System.ComponentModel.DataAnnotations;
 
 namespace FoodShop.Web.ViewModels.ProductType
 {
@@ -7,5 +8,7 @@ namespace FoodShop.Web.ViewModels.ProductType
         public int Id { get; set; }
 
         public string Name { get; set; } = null!;
+
+        public ICollection<ProductFromProductTypeViewModel> Products { get; set; } = null!;
     }
 }

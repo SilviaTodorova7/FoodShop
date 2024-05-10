@@ -53,6 +53,40 @@ namespace FoodShop.Services
             return await this.dbContext.ProductTypes.Select(pt => pt.Name).ToArrayAsync();
         }
 
+        public async Task<ICollection<ProductFromProductTypeViewModel>> GetProductsFromProductTypeAsync(int id)
+        {
+            ICollection<ProductFromProductTypeViewModel> products = await this.dbContext
+                .Products
+                .Where(pt => pt.ProductType.Id == id)
+                .Select(p => new ProductFromProductTypeViewModel()
+                {
+                    ProductTypeId = id,
+                    ProductId = p.Id,
+                    ProductName = p.Name,
+                    ProductPrice = p.Price,
+                    Count = p.Quantity,
+                })
+                .ToArrayAsync();
+
+            return products;
+        }
+
+        public async Task<ProductTypeViewModel> GetProductTypeAndProductsAsync(int id)
+        {
+            ProductType productType = await this.dbContext
+                .ProductTypes
+                .FirstAsync(pt => pt.Id == id);
+
+            ProductTypeViewModel model = new ProductTypeViewModel()
+            {
+                Id = id,
+                Name = productType.Name,
+                Products = await this.GetProductsFromProductTypeAsync(id),
+            };
+
+            return model;
+        }
+
         public async Task<AddOrEditProductTypeViewModel> GetProductTypeForEditAsync(int id)
         {
            ProductType productType = await this.dbContext.ProductTypes

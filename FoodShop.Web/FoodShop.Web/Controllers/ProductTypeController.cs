@@ -35,9 +35,12 @@ namespace FoodShop.Web.Controllers
 
                 return View(model);
             }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
 
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
@@ -63,9 +66,12 @@ namespace FoodShop.Web.Controllers
                     return View(model);
                 }
             }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
 
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpGet]
@@ -87,30 +93,71 @@ namespace FoodShop.Web.Controllers
                     return RedirectToAction("All", "ProductType");
                 }
             }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
 
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AddOrEditProductTypeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (User.IsAdmin())
             {
-                return View(model);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
 
-            try
-            {
-                await this.productTypeService.EditProductTypeAsync(id, model);
-                this.TempData[SuccessMessage] = "You have edited Product Type successfully!";
+                try
+                {
+                    await this.productTypeService.EditProductTypeAsync(id, model);
+                    this.TempData[SuccessMessage] = "You have edited Product Type successfully!";
 
-                return RedirectToAction("All", "ProductType");
+                    return RedirectToAction("All", "ProductType");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(ProductType), "Something went wrond while editing product type. Please try again later or contact administrator!");
+                    return View(model);
+                }
+
             }
-            catch (Exception)
+            else
             {
-                ModelState.AddModelError(nameof(ProductType), "Something went wrond while editing product type. Please try again later or contact administrator!");
-                return View(model);
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+
+                return RedirectToAction("All", "Product");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewProducts(int id)
+        {
+            if (User.IsAdmin())
+            {
+                try
+                {
+                    ProductTypeViewModel model = await this.productTypeService
+                    .GetProductTypeAndProductsAsync(id);
+
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(ProductType), "Something went wrond while trying to view products from product type. Please try again later or contact administrator!");
+                    this.TempData[WarningMessage] = "Something went wrond while trying to view products from product type. Please try again later or contact administrator!";
+
+                    return RedirectToAction("All", "ProductType");
+                }
+            }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+
+                return RedirectToAction("All", "Product");
             }
         }
     }
