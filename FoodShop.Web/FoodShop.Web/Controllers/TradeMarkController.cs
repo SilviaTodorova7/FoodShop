@@ -1,6 +1,7 @@
 ﻿using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
 using FoodShop.Web.Infrastructure.Extensions;
+using FoodShop.Web.ViewModels.Product;
 using FoodShop.Web.ViewModels.TradeMark;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,12 @@ namespace FoodShop.Web.Controllers
 
                 return View(model);
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
@@ -54,17 +58,22 @@ namespace FoodShop.Web.Controllers
                 {
                     await this.tradeMarkService.AddTradeMarkAsync(model);
                     this.TempData[SuccessMessage] = "You have added new Trademark successfully!";
+
                     return RedirectToAction("All", "TradeMark");
                 }
                 catch (Exception)
                 {
                     ModelState.AddModelError(nameof(TradeMark), "Something went wrong while adding Trademark. Please try again later or contact administrator!");
+
                     return RedirectToAction("All", "TradeMark");
                 }
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpGet]
@@ -85,9 +94,12 @@ namespace FoodShop.Web.Controllers
                     return RedirectToAction("All", "TradeMark");
                 }
             }
-
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
 
         [HttpPost]
@@ -114,9 +126,39 @@ namespace FoodShop.Web.Controllers
                 }
 
             }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
 
-            this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
-            return RedirectToAction("All", "Product");
+                return RedirectToAction("All", "Product");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewProducts(int id)
+        {
+            if (User.IsAdmin())
+            {
+                try
+                {
+                    TradeMarkViewModel model = await this.tradeMarkService
+                        .GetTradeMarkAndProducts(id);
+
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(nameof(TradeMark), "Something went wrong while adding Trademark. Please try again later or contact administrator!");
+
+                    return RedirectToAction("All", "TradeMark");
+                }
+            }
+            else
+            {
+                this.TempData[WarningMessage] = "You have to be administrator to reach this page!";
+                
+                return RedirectToAction("All", "Product");
+            }
         }
     }
 }

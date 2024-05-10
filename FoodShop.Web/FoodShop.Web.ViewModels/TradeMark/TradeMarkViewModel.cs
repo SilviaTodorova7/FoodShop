@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodShop.Web.ViewModels.Product;
 
 namespace FoodShop.Web.ViewModels.TradeMark
 {
@@ -7,5 +7,7 @@ namespace FoodShop.Web.ViewModels.TradeMark
         public int Id { get; set; }
 
         public string Name { get; set; } = null!;
+
+        public ICollection<ProductFromTradeMarkViewModel> Products { get; set; } = null!;
     }
 }

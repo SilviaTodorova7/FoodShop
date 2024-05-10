@@ -1,6 +1,7 @@
 ﻿using FoodShop.Data;
 using FoodShop.Data.Models;
 using FoodShop.Services.Interfaces;
+using FoodShop.Web.ViewModels.Product;
 using FoodShop.Web.ViewModels.TradeMark;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,6 +64,37 @@ namespace FoodShop.Services
             AddOrEditTradeMarkViewModel model = new AddOrEditTradeMarkViewModel()
             {
                 Name = tradeMark.Name,
+            };
+
+            return model;
+        }
+
+        public async Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMark(int id)
+        {
+            ICollection<ProductFromTradeMarkViewModel> products = await this.dbContext
+                .Products
+                .Where(p => p.TradeMarkId == id)
+                .Select(p => new ProductFromTradeMarkViewModel()
+                {
+                    TradeMarkId = id,
+                    ProductId = p.Id,
+                    ProductName = p.Name,
+                    ProductPrice = p.Price,
+                    Count = p.Quantity,
+                }).ToArrayAsync();
+
+            return products;
+        }
+
+        public async Task<TradeMarkViewModel> GetTradeMarkAndProducts(int id)
+        {
+            TradeMark trademark = await dbContext.TradeMarks.FirstAsync(t => t.Id == id);
+
+            TradeMarkViewModel model = new TradeMarkViewModel()
+            {
+                Id = id,
+                Name = trademark.Name,
+                Products = await this.GetProductsFromTradeMark(id),
             };
 
             return model;

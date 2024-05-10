@@ -1,4 +1,5 @@
-﻿using FoodShop.Web.ViewModels.TradeMark;
+﻿using FoodShop.Web.ViewModels.Product;
+using FoodShop.Web.ViewModels.TradeMark;
 
 namespace FoodShop.Services.Interfaces
 {
@@ -15,5 +16,9 @@ namespace FoodShop.Services.Interfaces
         Task EditTradeMarkAsync(int id, AddOrEditTradeMarkViewModel model);
 
         Task<bool> TradeMarkExistsByIdAsync(int? id);
+
+        Task<ICollection<ProductFromTradeMarkViewModel>> GetProductsFromTradeMark(int id);
+
+        Task<TradeMarkViewModel> GetTradeMarkAndProducts(int id);
     }
 }

@@ -7,6 +7,10 @@
     <UserSecretsId>aspnet-FoodShop.Web-cb051aef-ac59-4e0a-a667-ccf523605bba</UserSecretsId>
   </PropertyGroup>
 
+  <!--<ItemGroup>
+    <Content Remove="Views\TradeMark\ViewProducts.cshtml" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.27" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.27" />
@@ -23,6 +27,18 @@
     <ProjectReference Include="..\FoodShop.Services\FoodShop.Services.csproj" />
     <ProjectReference Include="..\FoodShop.Web.Infrastructure\FoodShop.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\FoodShop.Web.ViewModels\FoodShop.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TradeMark\ViewProducts.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\TradeMark\ViewProducts.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\TradeMark\ViewProducts.cshtml" />
   </ItemGroup>
 
 </Project>
